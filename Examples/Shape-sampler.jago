@@ -1,0 +1,229 @@
+{
+  "format": "jago-loop-studio",
+  "version": 4,
+  "name": "Shape sampler",
+  "width": 960,
+  "height": 640,
+  "paper": "#fffdf9",
+  "transparent": false,
+  "renderStyle": "smooth",
+  "pixelSize": 4,
+  "wiggle": 3,
+  "boil": 8,
+  "wiggleEnabled": false,
+  "fps": 8,
+  "loop": "loop",
+  "layers": [
+    {
+      "id": "bgagyjwmn",
+      "name": "Ink",
+      "visible": true,
+      "locked": false,
+      "opacity": 1
+    }
+  ],
+  "frames": [
+    {
+      "id": "zw3wotvp2",
+      "hold": 1,
+      "contents": {
+        "bgagyjwmn": [
+          {
+            "kind": "stroke",
+            "tool": "rect",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 45,
+                "y": 90,
+                "p": 0.5
+              },
+              {
+                "x": 215,
+                "y": 260,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "ellipse",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 280,
+                "y": 90,
+                "p": 0.5
+              },
+              {
+                "x": 450,
+                "y": 260,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "triangle",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 515,
+                "y": 90,
+                "p": 0.5
+              },
+              {
+                "x": 685,
+                "y": 260,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "star",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 750,
+                "y": 90,
+                "p": 0.5
+              },
+              {
+                "x": 920,
+                "y": 260,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "heart",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 45,
+                "y": 380,
+                "p": 0.5
+              },
+              {
+                "x": 215,
+                "y": 550,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "diamond",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 280,
+                "y": 380,
+                "p": 0.5
+              },
+              {
+                "x": 450,
+                "y": 550,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "arrow",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 515,
+                "y": 380,
+                "p": 0.5
+              },
+              {
+                "x": 685,
+                "y": 550,
+                "p": 0.5
+              }
+            ]
+          },
+          {
+            "kind": "stroke",
+            "tool": "hexagon",
+            "filled": false,
+            "color": "#49443e",
+            "size": 5,
+            "opacity": 1,
+            "pressure": false,
+            "animate": false,
+            "mirror": false,
+            "seed": 42,
+            "points": [
+              {
+                "x": 750,
+                "y": 380,
+                "p": 0.5
+              },
+              {
+                "x": 920,
+                "y": 550,
+                "p": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "current": 0,
+  "activeLayer": "bgagyjwmn"
+}
