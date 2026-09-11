@@ -156,7 +156,7 @@ selectFrame=function(i){clearSelection();baseSelectFrame(i);};
 afterRestore=function(){clearSelection();motionPreview=false;baseAfterRestore();};
 updateUI=function(){repairClipping();baseUpdateUI();if(uiReady)syncStudioUI();};
 saveLocal=function(){
- const previous=localStorage.getItem(WIGGLY_KEY)||localStorage.getItem(LEGACY_KEY);baseSaveLocal();if(autosaveFailed||!previous||previous===snapshot())return;
+ const previous=localStorage.getItem(JAGO_KEY);baseSaveLocal();if(autosaveFailed||!previous||previous===snapshot())return;
  if(Date.now()-lastRecovery<30000)return;
  try{let items=JSON.parse(localStorage.getItem(recoveryKey)||'[]');if(previous.length<1500000){items.unshift({time:Date.now(),data:previous});items=items.slice(0,3);while(JSON.stringify(items).length>2000000)items.pop();localStorage.setItem(recoveryKey,JSON.stringify(items));lastRecovery=Date.now();}}catch(e){/* The main autosave remains valid if recovery storage is full. */}
 };

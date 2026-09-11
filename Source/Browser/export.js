@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Cameron Jago Lis Illustrates.
 /*
-Original WigglyPaint and Decker by John Earnest (Internet Janitor).
+Inspiration: WigglyPaint and Decker by John Earnest (Internet Janitor).
 Studio edition: Cameron Jago Lis Illustrates.
 An independent edition; not an official release by the original creator.
 */
@@ -92,8 +92,8 @@ $('downloadExport').onclick=async()=>{
  finally{exporting=false;button.disabled=false;document.querySelectorAll('#exportDialog input,#exportDialog select,#exportDialog [data-close]').forEach(e=>e.disabled=false);$('exportProgress').classList.add('hidden');exportSummary();renderNeeded=true;}
 };
 async function init(){
- try{const saved=localStorage.getItem(WIGGLY_KEY)||localStorage.getItem(LEGACY_KEY);if(saved){project=validateProject(JSON.parse(saved));await preloadImages();}}
- catch(err){project=fresh();toast('Saved drawing could not be restored. Open a saved .jago or .wiggly project if you have one.');}
+ try{const saved=localStorage.getItem(JAGO_KEY);if(saved){project=validateProject(JSON.parse(saved));await preloadImages();}}
+ catch(err){project=fresh();toast('Saved drawing could not be restored. Open a saved .jago project if you have one.');}
  initialiseStudio();resizeBuffers();invalidate();resetHistory();setTool('pen');setColour(colour);updateUI();fit();requestAnimationFrame(tick);
 }
 init().catch(err=>{console.error(err);toast("The studio could not start. Reload or open a saved project.");});
