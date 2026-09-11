@@ -1,3 +1,9 @@
+# Packaging cleanup: 11 September 2026
+
+This v1.0.6 package clarifies inspiration credits, removes the precautionary Decker notice from the download and embedded app, and fixes references to removed publishing and migration files. The browser build now creates only the current Jago HTML files. The Windows EXE was rebuilt with corrected metadata and Jago names for its data folder, private browser address and single-instance guard. Browser autosave identifiers also use Jago names, with the obsolete fallback removed. The Windows app starts a fresh profile: save projects and export preset libraries from an earlier build before switching. The older pre-Jago project importer has been removed. Earlier .jago files still open. Drawing behaviour and the version number are unchanged. Microsoft WebView2 notices remain included.
+
+The sections below record development history leading up to the first public release.
+
 # Jago Loop Studio v1.0.6
 
 - Clearer stamp labels: Create stamp from selection, Import stamp image and Stamp shape.
@@ -33,7 +39,7 @@ GitHub is now linked beside the illustration website and Ko-fi in Help.
 - Left/right, top/bottom, four-way and 2 to 12-copy radial mirror, with adjustable centres and non-exported guides. Each mark retains its captured settings.
 - Candy cloud pink theme, hexagon shape, larger landscape/square/portrait canvas presets, and Base/Shadow/Light guidance.
 
-New saves use project schema 4 and require v1.0.3 or later. Earlier schema 2/3 .jago and Studio .wiggly projects still open. Existing flattened artwork cannot regain lost stroke data.
+New saves use project schema 4 and require v1.0.3 or later. Earlier schema 2/3 .jago projects still open. Existing flattened artwork cannot regain lost stroke data.
 
 PNG sequences are limited to 720 images, 60 seconds and 256 MB of stored image data; lower the export size or rate for large loops. Physical pen/touch hardware remains untested. Historical release notes below describe their respective versions.
 
@@ -49,7 +55,7 @@ PNG sequences are limited to 720 images, 60 seconds and 256 MB of stored image d
 - Matching hand-drawn JLS logo in the header, browser tab and Windows EXE at seven icon sizes.
 - Charcoal, Warm paper and Midnight plum interface themes, remembered locally and separate from artwork colours.
 
-New saves use project schema 3 and require v1.0.2 or later. Earlier .jago and .wiggly files still open. Previously flattened selections cannot recover missing stroke data; Undo or an older saved project is needed. Selection edges clip their animated contents.
+New saves use project schema 3 and require v1.0.2 or later. Earlier .jago files still open. Previously flattened selections cannot recover missing stroke data; Undo or an older saved project is needed. Selection edges clip their animated contents.
 
 Validation covers 16 style/motion selection combinations, transformed animation and undo, cold image/tip reload, nested GIF motion, pattern size/alignment, previews, resets, theme persistence, browser UI checks and the rebuilt Windows self-test. Historical release notes below describe their respective versions.
 
@@ -74,7 +80,7 @@ Selection moves rasterize selected pixels. Existing hatching strokes retain thei
 First release under the Jago Loop Studio name, with the subtitle Animated drawing & illustration.
 
 - Independent branding, Windows icon and app metadata; original creator attribution retained.
-- New .jago editable projects, with older Studio .wiggly import and legacy autosave migration.
+- New .jago editable projects.
 - Eight motion types, per-type controls, layer/stroke application, preview, shared timing, loop fitting and live-motion pause.
 - Eight stamp tips, PNG and selection tip import, brush variation, pressure options and portable preset libraries.
 - Alpha lock, clipping, shared base motion, blend modes, shading palettes, hatching and dither.

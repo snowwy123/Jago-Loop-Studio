@@ -1,8 +1,8 @@
-# Credits and original work
+# Credits and components
 
-**Original WigglyPaint and Decker: John Earnest (Internet Janitor).**
+**Inspiration: WigglyPaint and Decker by John Earnest (Internet Janitor).**
 
-**Jago Loop Studio, creative direction and customisation: Cameron Jago Lis Illustrates.**
+**Jago Loop Studio: Cameron Jago Lis Illustrates.**
 
 This is an independent studio implementation inspired by WigglyPaint. It is not an official release by John Earnest and does not imply his endorsement. The Windows shell, smooth/pixel renderer, timeline and project format in this suite belong to this separate Studio implementation; it does not run the original Decker runtime or import original `.deck` or Decker HTML projects.
 
@@ -13,7 +13,7 @@ This is an independent studio implementation inspired by WigglyPaint. It is not 
 - [Original Decker MIT license](https://github.com/JohnEarnest/Decker/blob/main/LICENSE.txt)
 - [Creator's clarification extending MIT/CC0 to WigglyPaint and its components](https://itch.io/t/4333237/librarymodule-licenses)
 
-The original WigglyPaint page lists its code under the **MIT License** and original assets under **CC0**. The Decker MIT notice identifies **Copyright (c) 2022 John Earnest**. The original notice is preserved in [Decker-MIT.txt](../Notices/Decker-MIT.txt) and embedded in the browser file. These credits do not transfer the original creator's rights to this Studio edition's credit holder.
+WigglyPaint and Decker are acknowledged as inspiration. Jago Loop Studio uses its own renderer, project format and Windows shell; it does not bundle the Decker runtime. The links above describe the original projects and their licences, rather than components included in this download.
 
 ## Windows component
 
@@ -28,7 +28,7 @@ The same notices are embedded in the executable and extracted beside its support
 
 The name used for this edition is **Cameron Jago Lis Illustrates**: Cameron Jago Lis, followed by Illustrates as the sole-trader name. The edition credit appears in Help/About, browser metadata, source headers, Windows file metadata and suite documentation.
 
-The Studio implementation and its documentation are released under the **[MIT License](../LICENSE)**, copyright (c) 2026 **Cameron Jago Lis Illustrates**. This license covers the Studio edition's contributions; John Earnest's original notice and Microsoft's component terms remain in effect for their respective work.
+The Studio implementation and its documentation are released under the **[MIT License](../LICENSE)**, copyright (c) 2026 **Cameron Jago Lis Illustrates**. This licence covers the Studio implementation and documentation. The bundled Microsoft WebView2 components remain subject to Microsoft's component terms and included third-party notices. The inspiration credit does not imply ownership of or endorsement by the original creators.
 
 Original project information was checked against the creator's own pages on 10 September 2026. No third-party redistribution site was used as the authority for the original work's license.
 
