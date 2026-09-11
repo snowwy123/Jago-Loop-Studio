@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Cameron Jago Lis Illustrates.
-// Original WigglyPaint and Decker: John Earnest (Internet Janitor).
+// Inspiration: WigglyPaint and Decker by John Earnest (Internet Janitor).
 // Studio edition: Cameron Jago Lis Illustrates. Independent release.
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ using Microsoft.Web.WebView2.WinForms;
 [assembly: AssemblyDescription("Animated drawing and illustration for Windows")]
 [assembly: AssemblyProduct("Jago Loop Studio")]
 [assembly: AssemblyCompany("Cameron Jago Lis Illustrates")]
-[assembly: AssemblyCopyright("Original WigglyPaint and Decker: John Earnest. Studio edition: Cameron Jago Lis Illustrates.")]
+[assembly: AssemblyCopyright("Copyright (c) 2026 Cameron Jago Lis Illustrates.")]
 [assembly: AssemblyVersion("1.0.6.0")]
 [assembly: AssemblyFileVersion("1.0.6.0")]
 
@@ -43,13 +43,13 @@ internal static class Program
     {
         IsTest = args.Length == 2 && args[0] == "--self-test";
         if (IsTest) TestRoot = Path.GetFullPath(args[1]);
-        AppRoot = IsTest ? TestRoot : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WigglyPaint Studio");
+        AppRoot = IsTest ? TestRoot : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Jago Loop Studio");
         try
         {
             if (!IsTest)
             {
                 bool first;
-                instance = new Mutex(true, @"Local\WigglyPaintStudio." + Environment.UserName, out first);
+                instance = new Mutex(true, @"Local\JagoLoopStudio." + Environment.UserName, out first);
                 if (!first)
                 {
                     IntPtr h = FindWindow(null, "Jago Loop Studio");
@@ -110,7 +110,7 @@ internal static class Program
 
 internal sealed class StudioWindow : Form
 {
-    private const string Origin = "https://wigglypaint.example";
+    private const string Origin = "https://jagoloopstudio.example";
     private readonly WebView2 browser = new WebView2();
     private readonly JavaScriptSerializer json = new JavaScriptSerializer { MaxJsonLength = 32000000 };
     private readonly Label loading = new Label();
@@ -163,7 +163,7 @@ internal sealed class StudioWindow : Form
             core.Settings.AreDefaultContextMenusEnabled = false;
             core.Settings.AreDevToolsEnabled = Program.IsTest;
             core.Settings.IsSwipeNavigationEnabled = false;
-            core.SetVirtualHostNameToFolderMapping("wigglypaint.example", Program.RuntimeRoot, CoreWebView2HostResourceAccessKind.DenyCors);
+            core.SetVirtualHostNameToFolderMapping("jagoloopstudio.example", Program.RuntimeRoot, CoreWebView2HostResourceAccessKind.DenyCors);
             core.NavigationStarting += (s, e) => { if (!e.Uri.StartsWith(Origin + "/", StringComparison.OrdinalIgnoreCase)) e.Cancel = true; };
             core.NewWindowRequested += (s, e) => { e.Handled = true; OpenCreditLink(e.Uri); };
             core.DownloadStarting += DownloadStarting;
@@ -234,7 +234,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 else
                 {
                     string ext = Path.GetExtension(name).ToLowerInvariant();
-                    using (var dialog = new SaveFileDialog { FileName = name, InitialDirectory = lastSaveFolder, AddExtension = true, DefaultExt = ext.TrimStart('.'), OverwritePrompt = true, Filter = ext == ".jago" ? "Jago Loop project (*.jago)|*.jago" : ext == ".jagopresets" ? "Jago presets (*.jagopresets)|*.jagopresets" : ext == ".wiggly" ? "Earlier project (*.wiggly)|*.wiggly" : ext == ".gif" ? "Animated GIF (*.gif)|*.gif" : ext == ".zip" ? "PNG frame sequence (*.zip)|*.zip" : "PNG image (*.png)|*.png" })
+                    using (var dialog = new SaveFileDialog { FileName = name, InitialDirectory = lastSaveFolder, AddExtension = true, DefaultExt = ext.TrimStart('.'), OverwritePrompt = true, Filter = ext == ".jago" ? "Jago Loop project (*.jago)|*.jago" : ext == ".jagopresets" ? "Jago presets (*.jagopresets)|*.jagopresets" : ext == ".gif" ? "Animated GIF (*.gif)|*.gif" : ext == ".zip" ? "PNG frame sequence (*.zip)|*.zip" : "PNG image (*.png)|*.png" })
                     {
                         if (dialog.ShowDialog(this) != DialogResult.OK) { e.Cancel = true; Announce("Save cancelled"); return; }
                         path = dialog.FileName;

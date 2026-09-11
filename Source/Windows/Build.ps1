@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 Cameron Jago Lis Illustrates.
-# Original WigglyPaint and Decker: John Earnest (Internet Janitor).
+# Inspiration: WigglyPaint and Decker by John Earnest (Internet Janitor).
 # Studio edition: Cameron Jago Lis Illustrates.
 param([string]$SdkDirectory)
 $ErrorActionPreference = 'Stop'
