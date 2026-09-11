@@ -27,3 +27,13 @@ input.tool-color{appearance:none;-webkit-appearance:none;flex-shrink:0;padding:0
 #sprayPreview{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0}#sprayControls{border-top:1px solid var(--line);margin:12px 0;padding-top:8px}#sprayControls h3{font-size:13px}#pivotHint{color:var(--muted)}
 
 .empty-hint.pixel-hint svg{display:none}.empty-hint.pixel-hint strong{font-size:15px;letter-spacing:0}.empty-hint.pixel-hint p{font-size:12px;margin:6px 0 0}
+
+.preset-status{padding:8px 10px;border-left:2px solid var(--accent);background:var(--preview);overflow-wrap:anywhere}.preset-status:empty{display:none}
+
+.preset-row{align-items:center}.preset-row input[type=checkbox]{flex:0 0 18px;width:18px;height:18px}.preset-row button:nth-child(2){flex:1;justify-content:flex-start;white-space:normal}
+
+#drawingToolChooser #useStamp{width:100%;margin-top:10px}#drawingToolChooser #useStamp.active{border-color:var(--accent);background:var(--accent);color:#15171b}
+#brushColour{margin-top:18px}#brushColour .section-title{margin-bottom:10px}#sharedBrushBasics>.check{margin-top:12px}
+#stampVariationSettings h3{font-size:13px;margin:18px 0 10px}#stampVariationSettings .control{margin-top:14px}
+#stampBrushPanel .control{margin-top:15px}#stampBrushPanel #stampDetails{margin-top:0}#stampBrushPanel #brushPreviewLabel{font-size:11px;margin:6px 0 12px}
+#sharedDrawingOptions>.check{margin:12px 0}#saveStampAsDialog{width:430px}#saveStampAsName{display:block;width:100%;margin-top:8px;padding:10px}#saveStampAsError{color:var(--danger)}

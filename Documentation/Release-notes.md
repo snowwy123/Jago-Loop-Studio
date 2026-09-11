@@ -1,3 +1,37 @@
+# Jago Loop Studio v1.1.5
+
+- The stamp preview now keeps a steady scale while Size changes, so imported brushes visibly grow all the way to the 160 px setting. Previously, automatic fitting made larger brushes appear to stop growing in the preview.
+- Actual canvas rendering is unchanged. Transparent margins in a stamp image still count towards its brush footprint, and pressure or size variation can change individual marks.
+- Save as new preset and Reset stamp defaults now sit below the stamp controls, beside Stamp presets and Make a brush pack.
+- Windows and browser apps contain the same update. Existing projects and brush packs remain compatible.
+
+# Jago Loop Studio v1.1.4
+
+- Draw switches between regular brush controls and stamp controls when the tool changes. Size, opacity, colour and pen pressure use the same controls and values, moved into the active panel.
+- Stamp choice and preview lead into its shared controls, Save as new preset, pattern settings where supported, placement, spacing, and visible rotation/scatter/size-variation controls.
+- Smoothing remains available for stamps under Stroke feel & motion. Edit brush contains image replacement, import and creation tools. Mirror and new-mark wiggle stay together under Drawing options.
+- Save as new preset opens a small naming dialog, saves the current image and settings in Your saved presets, and leaves the original unchanged. Empty, duplicate and over-capacity saves give clear feedback.
+- Windows and browser apps contain the same update. Project and brush-pack formats are unchanged.
+
+# Jago Loop Studio v1.1.3
+
+- One main Brush dropdown contains default stamps, imported and saved brush setups, and custom images in the current drawing. Selecting a brush loads its setup; project-only images use the current settings.
+- The separate stamp-image selector and image creation tools are tucked inside Edit brush. Normal brush adjustments remain directly below the main picker.
+- Motion preset is explicitly labelled as saved settings. Named entries include the underlying wiggle type, such as Paper Breeze · Flutter. Modified entries retain the type label.
+- Preset descriptions, the manager and brush-pack help now explain the same workflow. No new wiggle types are implied or added.
+- Windows and browser apps contain the same changes. Existing drawing and brush-pack formats are unchanged.
+
+# Jago Loop Studio v1.1.2
+
+- Import a brush pack once, then choose any of its brushes from Saved brush in Draw. Choose motion presets by name from Saved motion in Motion. No separate add-to-project step is needed.
+- Both dropdowns group Starter presets, Imported presets, Your saved presets and Earlier presets. Older libraries have no reliable origin information and appear under Earlier presets.
+- The selected preset name stays visible. Changing its settings labels the current setup as modified. Save it under a new name to keep your version in Your saved presets.
+- Custom stamp images are included in the project only when used. Reusing the same image does not add duplicates or consume more of the 24 image slots, including when PNG encoding differs.
+- The preset manager supports individual removal, checkbox selection, Select imported, Delete selected and Undo removal. Removing a preset leaves existing project images and artwork intact. Undo removal is available for the last deletion during the current session.
+- Importing the same pack again skips identical presets. Same-name presets with different settings are preserved. Imports exceeding the 30-per-kind library limits leave the library unchanged.
+- Classic motion presets now load their saved amount into the Classic controls as well as the motion setup.
+- Windows and browser apps contain the same update. Project format remains version 5.
+
 # Jago Loop Studio v1.1.1
 
 - Chalk block now offers Continuous pattern and Individual stamps, with separately adjustable grain size. Continuous chalk grain aligns between strokes.

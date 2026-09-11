@@ -6,7 +6,7 @@ A small, offline drawing studio for lively lines, textured brushes and short ani
 
 Original inspiration: **John Earnest (Internet Janitor), creator of WigglyPaint and Decker**. This is an independent implementation, with its own renderer and Windows shell. It is not an official release or endorsement by the original creator.
 
-## Open v1.1.1
+## Open v1.1.5
 
 Extract the release ZIP first, then double-click **Jago-Loop-Studio.exe** on Windows or **Jago-Loop-Studio.html** in a modern browser. Each application file is self-contained. The Windows edition requires 64-bit Windows and Microsoft WebView2 Runtime.
 
@@ -31,7 +31,7 @@ For a hosted version, serve **index.html**. No server application, account or in
 - Open bouncing ball, motion, shading, brush, line and shape examples from Help (?).
 - Save stamp and motion presets, use canvas guides, and keep local recovery snapshots.
 
-**Updating:** the current Windows profile and browser storage continue to work. Keep a .jago backup of your drawing. Files saved by v1.1.1 use project schema 5 and need v1.1.1 or later to reopen; earlier Jago projects still open in this version.
+**Updating:** the current Windows profile and browser storage continue to work. Keep a .jago backup of your drawing. Files saved by v1.1.5 use project schema 5 and need v1.1.5 or later to reopen; earlier Jago projects still open in this version.
 
 **Save** creates an editable **.jago** project. Earlier .jago projects still open. Save files use the Jago Loop Studio project format.
 
@@ -55,7 +55,7 @@ The browser app does not send drawings to a service. Autosaves and presets live 
 
 ## Release information
 
-Version 1.1.1 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for changes and compatibility notes.
+Version 1.1.5 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for changes and compatibility notes.
 
 ## About & support
 
@@ -68,3 +68,15 @@ Jago Loop Studio is an independent project by **Cameron Jago Lis Illustrates**.
 Support is optional. The app stays free, with all drawing tools available. Contributions support Cameron's work on Jago Loop Studio.
 
 Image import now lives in Layers, with a choice of a new named layer or the active layer.
+
+## Brush packs and named presets
+
+Import a pack once in Stamp presets. Choose its names directly in Brush (Draw) or Motion preset (Motion), grouped separately from starters and your saved setups. Modified settings are labelled beside the preset name. The manager supports selecting and deleting several presets, selecting imported presets, and undoing the last removal. Used images are included automatically and reused without duplicates. See [the brush-pack guide](Documentation/Brush-packs.md).
+
+The main Brush picker includes custom images in your drawing. Edit brush contains the optional image selector. Motion preset entries show their underlying type, such as Paper Breeze · Flutter: these are saved settings for the existing wiggle types.
+
+
+The Draw panel follows your selected tool. Choose Stamp brush (J) to put its Brush picker, preview, size, opacity, colour and pen pressure together. Rotation, scatter and size variation are visible below Placement. Smoothing is under Stroke feel & motion. Mirror and Wiggle new marks stay under Drawing options. Choose Save as new preset to keep a named copy without changing the original. Normal pens use the same shared controls in their own panel; switching tools keeps their values.
+
+
+Stamp size runs up to 160 px. The small preview keeps its scale steady while you adjust Size, so growth remains visible. The setting describes the stamp image footprint, including transparent margins. Save as new preset and Reset stamp defaults are at the bottom of the stamp panel, beside Stamp presets and Make a brush pack.

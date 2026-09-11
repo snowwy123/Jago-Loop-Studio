@@ -45,10 +45,14 @@ The test writes its own profile, results and exported samples inside that folder
 
 ## Compatibility
 
-Public release v1.1.1 saves project schema 5. Schemas 2, 3 and 4 are accepted and upgraded when saving. Schema 5 adds native pixel canvases, spray settings, additional guides, independently sized stamp patterns and pivots outside artwork bounds. Files saved here require v1.1.0 or later. Imported preset libraries remain supported; new pattern settings and extended pivots require this release.
+Public release v1.1.5 saves project schema 5. Schemas 2, 3 and 4 are accepted and upgraded when saving. Schema 5 adds native pixel canvases, spray settings, additional guides, independently sized stamp patterns and pivots outside artwork bounds. Files saved here require v1.1.0 or later. Imported preset libraries remain supported; new pattern settings and extended pivots require this release.
 
 Pixel canvases keep renderStyle=pixel and pixelSize=1. The renderer uses discrete pixel paths and nearest-neighbour layer transforms and export enlargement. The 24 MiB still-layer cache stores only tick-independent source pixels and is invalidated with project edits. Motion output, clipping and blend modes still run at each motion step. Live selection groups keep their nested operations, clip polygon and affine transform. Project, brush and motion settings are validated before accepting imported files.
 
 Keep the Studio LICENSE and the Microsoft WebView2 licence and third-party notices with redistributed Windows builds. See [credits](../Documentation/Credits.md). WigglyPaint and Decker are inspiration credits; the build does not include the Decker runtime.
 
 Stamp brushes may store patternAngle (-180 to 180 degrees) and chalkPattern. Missing chalkPattern keeps older chalk marks on the original image-stamp renderer. The welcome hint cancels canvas zoom to maintain screen-size text and hides at insufficient display sizes.
+
+The presets.js module handles grouped quick choices, named/modified setup feedback, duplicate-safe custom image loading, exact-preset import merging and reversible library removal. Optional preset origin metadata is imported/saved; legacy entries remain unclassified. Origin never participates in identity matching. Project schema remains 5.
+
+The draw-panel.js module moves existing shared controls between tool panels without cloning them or replacing handlers. It also provides the direct save-as-new-stamp dialog. No new persistent project fields are introduced.

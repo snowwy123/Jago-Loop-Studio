@@ -109,9 +109,5 @@ function configureNewStroke(op){
  if(op.tool==='stamp'){op.brush=copy(stampSettings);if(stampSettings.motionPlacement==='layer')delete op.motion;}
 }
 async function addCustomTip(src,name){
- const im=await cacheImage(src);if(im.width>4096||im.height>4096)throw Error('Stamp images must be at most 4096 pixels per side.');
- const c=makeCanvas(128,128),cx=c.getContext('2d'),s=Math.min(128/im.width,128/im.height);cx.drawImage(im,(128-im.width*s)/2,(128-im.height*s)/2,im.width*s,im.height*s);
- const pixels=cx.getImageData(0,0,128,128).data;if(!pixels.some((v,i)=>i%4===3&&v>0))throw Error('This stamp image is completely transparent.');
- project.brushTips=project.brushTips||{};if(Object.keys(project.brushTips).length>=24)throw Error('This project already has 24 custom stamp images.');
- const id='tip'+uid(),png=c.toDataURL('image/png');await cacheImage(png);project.brushTips[id]={name:name.slice(0,50),src:png};stampSettings.tip=id;setTool('stamp');commit('Custom stamp added');return id;
+ const id=await ensureProjectStamp(src,name,project);stampSettings.tip=id;setTool('stamp');commit('Stamp image ready');return id;
 }

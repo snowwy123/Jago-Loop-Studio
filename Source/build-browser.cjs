@@ -8,7 +8,7 @@ let html=fs.readFileSync(path.join(dir,'shell.html'),'utf8');
 const logo=fs.readFileSync(path.join(__dirname,'Brand','logo.svg'),'utf8').trim();
 html=html.replace('<!-- STUDIO_LOGO -->',logo).replace('<!-- STUDIO_FAVICON -->','<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,'+encodeURIComponent(logo)+'">');
 html=html.replace('/* JAGO_STYLES */',fs.readFileSync(path.join(dir,'studio.css'),'utf8'));
-const engine=['engine.js','motion.js','brushes.js','workflow.js','interface.js','examples.js','refinements.js','export.js'].map(file=>fs.readFileSync(path.join(dir,file),'utf8')).join('\n');
+const engine=['engine.js','motion.js','brushes.js','workflow.js','interface.js','examples.js','refinements.js','presets.js','draw-panel.js','export.js'].map(file=>fs.readFileSync(path.join(dir,file),'utf8')).join('\n');
 html=html.replace('<!-- STUDIO_ENGINE -->','<!-- STUDIO_ENGINE -->\n<script>\n'+engine+'\n</script>\n');
 for(const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(m[1]);
 fs.writeFileSync(path.join(__dirname,'..','Jago-Loop-Studio.html'),html);

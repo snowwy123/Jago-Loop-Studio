@@ -174,3 +174,9 @@ In **Edit > Drawing aids**, choose Rule of thirds for composition, Centre cross 
 
 
 Pattern angle turns the grain, hatch lines or other pattern independently of the outer stamp. Continuous layouts keep the rotated pattern aligned across the canvas. Stamp rotation turns the entire individual dab, while Follow stroke turns it along your stroke. Hatching starts diagonal and Parallel lines start horizontal; both can now be turned to any angle. Stipple already has Stamp rotation under its placement settings.
+
+
+The Draw panel follows your selected tool. Choose Stamp brush (J) to put its Brush picker, preview, size, opacity, colour and pen pressure together. Rotation, scatter and size variation are visible below Placement. Smoothing is under Stroke feel & motion. Mirror and Wiggle new marks stay under Drawing options. Choose Save as new preset to keep a named copy without changing the original. Normal pens use the same shared controls in their own panel; switching tools keeps their values.
+
+
+Stamp size runs up to 160 px. The small preview keeps its scale steady while you adjust Size, so growth remains visible. The setting describes the stamp image footprint, including transparent margins. Save as new preset and Reset stamp defaults are at the bottom of the stamp panel, beside Stamp presets and Make a brush pack.
