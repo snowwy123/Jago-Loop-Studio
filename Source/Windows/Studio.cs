@@ -25,8 +25,8 @@ using Microsoft.Web.WebView2.WinForms;
 [assembly: AssemblyProduct("Jago Loop Studio")]
 [assembly: AssemblyCompany("Cameron Jago Lis Illustrates")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Cameron Jago Lis Illustrates.")]
-[assembly: AssemblyVersion("1.0.6.0")]
-[assembly: AssemblyFileVersion("1.0.6.0")]
+[assembly: AssemblyVersion("1.0.7.0")]
+[assembly: AssemblyFileVersion("1.0.7.0")]
 
 internal static class Program
 {

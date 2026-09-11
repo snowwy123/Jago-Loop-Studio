@@ -1,3 +1,12 @@
+# v1.0.7: sampler motion fixes
+
+- Brush and shape samplers now open with motion enabled and animated marks.
+- The brush sampler fills its bottom-right cell with individual angled hatch stamps, for twelve samples showing all eleven built-in tips.
+- Apply to layer and Apply to strokes now enable project motion and resume live playback. Applying remains undoable.
+- The small motion preview works when project motion is disabled. Layer preview temporarily animates the active layer without changing the saved motion switch or unrelated layers.
+- Motion guidance explains that selecting a type prepares new marks; use preview or Apply for existing artwork. Texture crawl affects stamp texture.
+- Browser and Windows versions share these fixes. Project format and Jago profile location are unchanged.
+
 # Packaging cleanup: 11 September 2026
 
 This v1.0.6 package clarifies inspiration credits, removes the precautionary Decker notice from the download and embedded app, and fixes references to removed publishing and migration files. The browser build now creates only the current Jago HTML files. The Windows EXE was rebuilt with corrected metadata and Jago names for its data folder, private browser address and single-instance guard. Browser autosave identifiers also use Jago names, with the obsolete fallback removed. The Windows app starts a fresh profile: save projects and export preset libraries from an earlier build before switching. The older pre-Jago project importer has been removed. Earlier .jago files still open. Drawing behaviour and the version number are unchanged. Microsoft WebView2 notices remain included.

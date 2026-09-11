@@ -8,7 +8,9 @@ function motionDefaults(type='classic'){return{type,amount:type==='breathe'?8:ty
 let motionDraft=motionDefaults(),motionScope='new',motionPreview=false,motionPaused=false,motionPauseTick=0;
 const legacyPathPoints=pathPoints,legacyRenderLayer=renderLayer,legacyPaintCanvas=paintCanvas;
 const motionBoundsCache=new Map();
-let motionLayerActive=false,layerTextureMotion=null;
+let motionLayerActive=false,layerTextureMotion=null,motionPreviewActive=false,motionSampleActive=false;
+function motionIsEnabled(){return project.wiggleEnabled||motionPreviewActive||motionSampleActive;}
+function enableAppliedMotion(){project.wiggleEnabled=true;motionPaused=false;lastTick=-1;}
 const originalJitterPoint=jitterPoint;
 jitterPoint=function(p,index,op,tick){return renderingStill||motionLayerActive?p:originalJitterPoint(p,index,op,tick);};
 function motionDuration(){return project.frames.length>1?frameSequence().reduce((n,i)=>n+project.frames[i].hold/project.fps,0):(project.motionLoopSeconds||3);}
@@ -16,7 +18,7 @@ function motionPhase(m,tick,seed=0){let time=tick/project.boil;if(m.stepped)time
 function boundsForOps(ops){let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;for(const op of ops){if(op.kind==='group'){const b=op.outside?boundsForOps(op.ops):{x:Math.min(...op.clip.map(p=>p.x)),y:Math.min(...op.clip.map(p=>p.y)),w:Math.max(...op.clip.map(p=>p.x))-Math.min(...op.clip.map(p=>p.x)),h:Math.max(...op.clip.map(p=>p.y))-Math.min(...op.clip.map(p=>p.y))};const [a,c,d,e,tx,ty]=op.transform;for(const [x,y] of [[b.x,b.y],[b.x+b.w,b.y],[b.x,b.y+b.h],[b.x+b.w,b.y+b.h]]){const xx=a*x+d*y+tx,yy=c*x+e*y+ty;x0=Math.min(x0,xx);y0=Math.min(y0,yy);x1=Math.max(x1,xx);y1=Math.max(y1,yy);}}else if(op.kind==='image'){x0=Math.min(x0,op.x);y0=Math.min(y0,op.y);x1=Math.max(x1,op.x+op.w);y1=Math.max(y1,op.y+op.h);}else{for(const p of op.points){x0=Math.min(x0,p.x-op.size/2);y0=Math.min(y0,p.y-op.size/2);x1=Math.max(x1,p.x+op.size/2);y1=Math.max(y1,p.y+op.size/2);}if(op.mirror&&op.symmetry){const b=boundsForOps([{...op,mirror:false}]);for(const m of symmetryMatrices(op.symmetry))for(const p of [{x:b.x,y:b.y},{x:b.x+b.w,y:b.y},{x:b.x+b.w,y:b.y+b.h},{x:b.x,y:b.y+b.h}]){const q=matrixPoint(m,p);x0=Math.min(x0,q.x);y0=Math.min(y0,q.y);x1=Math.max(x1,q.x);y1=Math.max(y1,q.y);}}}}return Number.isFinite(x0)?{x:x0,y:y0,w:Math.max(1,x1-x0),h:Math.max(1,y1-y0)}:{x:0,y:0,w:project.width,h:project.height};}
 function layerBounds(id){const key=revision+':'+id;if(motionBoundsCache.has(key))return motionBoundsCache.get(key);const b=boundsForOps(project.frames.flatMap(f=>f.contents[id]||[]));if(motionBoundsCache.size>32)motionBoundsCache.clear();motionBoundsCache.set(key,b);return b;}
 function motionPoint(p,m,tick,b,seed=0,along=.5){
- if(!project.wiggleEnabled||m.type==='crawl')return{...p};
+ if(!motionIsEnabled()||m.type==='crawl')return{...p};
  const u=motionPhase(m,tick,seed),t=u*Math.PI*2,a=m.amount;
  const cx=b.x+b.w*m.anchorX,cy=b.y+b.h*m.anchorY,dx=p.x-cx,dy=p.y-cy;
  if(m.type==='sway'){const r=Math.sin(t)*m.angle*Math.PI/180;return{...p,x:cx+dx*Math.cos(r)-dy*Math.sin(r),y:cy+dx*Math.sin(r)+dy*Math.cos(r)};}
@@ -86,7 +88,7 @@ function warpLayerColumns(source,c,m,tick,b,style){
  c.putImageData(image,0,0);
 }
 function warpLayer(source,m,tick,b,style){
- if(!project.wiggleEnabled||m.type==='crawl')return source;
+ if(!motionIsEnabled()||m.type==='crawl')return source;
  const out=makeCanvas(),c=out.getContext('2d');
  if(['sway','breathe','drift','spring'].includes(m.type)){
   const a=motionPoint({x:0,y:0},m,tick,b),x=motionPoint({x:1,y:0},m,tick,b),y=motionPoint({x:0,y:1},m,tick,b);
@@ -99,8 +101,8 @@ function warpLayer(source,m,tick,b,style){
 }
 renderLayer=function(fi,id,tick,includeDraft=false,style=project.renderStyle){
  const layer=project.layers.find(l=>l.id===id),effect=resolvedLayerMotion(layer);
- const prior=motionLayerActive,priorTexture=layerTextureMotion;motionLayerActive=!!effect;layerTextureMotion=effect?.motion.type==='crawl'?effect.motion:null;
- try{const out=legacyRenderLayer(fi,id,tick,includeDraft,style);return effect&&!renderingStill?warpLayer(out,effect.motion,tick,effect.bounds,style):out;}finally{motionLayerActive=prior;layerTextureMotion=priorTexture;}
+ const prior=motionLayerActive,priorTexture=layerTextureMotion,priorPreview=motionPreviewActive;motionLayerActive=!!effect;motionPreviewActive=motionPreview&&effect?.owner===project.activeLayer;layerTextureMotion=effect?.motion.type==='crawl'?effect.motion:null;
+ try{const out=legacyRenderLayer(fi,id,tick,includeDraft,style);return effect&&!renderingStill?warpLayer(out,effect.motion,tick,effect.bounds,style):out;}finally{motionLayerActive=prior;layerTextureMotion=priorTexture;motionPreviewActive=priorPreview;}
 };
 renderFrame=function(fi,tick,withPaper=true,includeDraft=false,style=project.renderStyle){
  const key=`${revision}:${fi}:${tick}:${withPaper}:${style}:${project.pixelSize}:${motionPreview}`;
@@ -121,12 +123,12 @@ tick=function(now){
  if(!exporting&&!document.hidden){
   const seconds=playing?playBase/project.fps+(now-playStart)/1000:now/1000;
   const hasNew=projectHasMotion(),motionRate=hasNew?24:project.boil;
-  const nextTick=!project.wiggleEnabled?0:motionPaused?motionPauseTick:Math.floor(seconds*motionRate)/motionRate*project.boil;
+  const nextTick=!project.wiggleEnabled&&!motionPreview?0:motionPaused?motionPauseTick:Math.floor(seconds*motionRate)/motionRate*project.boil;
   if(nextTick!==lastTick){phase=nextTick;lastTick=nextTick;renderNeeded=true;}
   if(playing){const index=frameAtBeat(playBase+(now-playStart)/1000*project.fps);if(index!==playIndex){playIndex=index;renderNeeded=true;updateStatus();}Array.from($('frames').children).forEach((e,i)=>e.classList.toggle('playing',i===playIndex));}
   if(renderNeeded)paintCanvas();if(typeof paintMotionPreview==='function')paintMotionPreview(now);
  }requestAnimationFrame(tick);
 };
 function projectHasMotion(){return motionPreview||project.layers.some(l=>l.motion)||project.frames.some(f=>Object.values(f.contents).some(ops=>allOperations(ops).some(op=>op.motion)));}
-function applyMotionToLayer(){if(!canDraw())return;activeLayer().motion=copy(motionDraft);motionPreview=false;commit('Layer motion applied');}
-function applyMotionToStrokes(){if(!canDraw())return;for(const frame of project.frames)for(const op of allOperations(frame.contents[project.activeLayer]))if(op.kind==='stroke'&&op.tool!=='eraser'){op.motion=copy(motionDraft);op.animate=true;}motionPreview=false;commit('Motion applied to strokes in this layer');}
+function applyMotionToLayer(){if(!canDraw())return;activeLayer().motion=copy(motionDraft);enableAppliedMotion();motionPreview=false;commit('Layer motion applied');}
+function applyMotionToStrokes(){if(!canDraw())return;for(const frame of project.frames)for(const op of allOperations(frame.contents[project.activeLayer]))if(op.kind==='stroke'&&op.tool!=='eraser'){op.motion=copy(motionDraft);op.animate=true;}enableAppliedMotion();motionPreview=false;commit('Motion applied to strokes in this layer');}

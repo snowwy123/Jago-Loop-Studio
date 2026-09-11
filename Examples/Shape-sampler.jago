@@ -10,7 +10,7 @@
   "pixelSize": 4,
   "wiggle": 3,
   "boil": 8,
-  "wiggleEnabled": false,
+  "wiggleEnabled": true,
   "fps": 8,
   "loop": "loop",
   "layers": [
@@ -36,7 +36,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -60,7 +60,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -84,7 +84,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -108,7 +108,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -132,7 +132,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -156,7 +156,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -180,7 +180,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [
@@ -204,7 +204,7 @@
             "size": 5,
             "opacity": 1,
             "pressure": false,
-            "animate": false,
+            "animate": true,
             "mirror": false,
             "seed": 42,
             "points": [

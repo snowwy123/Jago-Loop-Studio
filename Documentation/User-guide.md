@@ -130,3 +130,8 @@ On systems using Command, the equivalent Command shortcuts are accepted. Use the
 ## Exploring the motion study
 
 Open Help (?) and choose Motion study. Save your current drawing first. The five named layers separate the fixed support and swing arc, breathing shadow, swaying pendulum, rippling ribbon and fluttering pencil line. In Layers, select a moving subject, then use Motion with the active-layer scope to explore its settings. Toggle layer visibility to study the marks separately. The same study is included in Examples as an editable .jago project, GIF and PNG.
+
+
+## Trying motion on existing drawings
+
+Choosing a wiggle type prepares settings for new marks. To try it on existing artwork, enable Preview these settings on the layer. This temporary preview works even if project motion is off and does not change the saved drawing. Turn the preview off to return to the original state. Apply to layer moves the layer together; Apply to strokes changes its marks across all frames. Both Apply buttons enable project motion and resume it, and Undo restores the project change. The small preview demonstrates the chosen type independently of the project motion switch. Pause live motion also pauses the small preview. Texture crawl changes stamp texture; plain pen strokes remain still with that type.

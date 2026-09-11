@@ -6,7 +6,7 @@ A small, offline drawing studio for lively lines, textured brushes and short ani
 
 Original inspiration: **John Earnest (Internet Janitor), creator of WigglyPaint and Decker**. This is an independent implementation, with its own renderer and Windows shell. It is not an official release or endorsement by the original creator.
 
-## Open v1.0.6
+## Open v1.0.7
 
 Extract the release ZIP first, then double-click **Jago-Loop-Studio.exe** on Windows or **Jago-Loop-Studio.html** in a modern browser. Each application file is self-contained. The Windows edition requires 64-bit Windows and Microsoft WebView2 Runtime.
 
@@ -50,7 +50,7 @@ The browser app does not send drawings to a service. Autosaves and presets live 
 
 ## Release information
 
-Version 1.0.6 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for its development history and packaging cleanup.
+Version 1.0.7 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for its development history and packaging cleanup.
 
 ## About & support
 

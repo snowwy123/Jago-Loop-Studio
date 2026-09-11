@@ -46,7 +46,7 @@ function applyStampTexture(c,op,tick,cell){
  const settings=op.brush||stampSettings,aligned=patternTips.includes(settings.tip)&&(!['hatch','crosshatch'].includes(settings.tip)||settings.patternMode==='aligned');
  if(settings.tip==='dither'||aligned){c.save();c.imageSmoothingEnabled=false;c.globalCompositeOperation='destination-in';c.drawImage(patternMask(settings,c.canvas.width,c.canvas.height,cell),0,0);c.restore();}
  const texture=layerTextureMotion||(op.motion?.type==='crawl'&&op.animate?op.motion:null);
- if(!texture||!texture.amount||!project.wiggleEnabled||renderingStill)return;
+ if(!texture||!texture.amount||!motionIsEnabled()||renderingStill)return;
  // Moving grain modulates existing pigment, without cutting new holes or flashing the whole stamp.
  const tile=makeCanvas(32,32),tc=tile.getContext('2d'),phase=motionPhase(texture,tick,op.seed)*Math.PI*2,strength=Math.min(.65,texture.amount/80);
  for(let y=0;y<32;y++)for(let x=0;x<32;x++){const grain=.5+.25*Math.sin(x*Math.PI/8+y*Math.PI/16-phase)+.25*Math.cos(y*Math.PI/4-x*Math.PI/16+phase);tc.fillStyle='rgba(0,0,0,'+(1-strength*grain)+')';tc.fillRect(x,y,1,1);}
