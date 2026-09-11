@@ -26,6 +26,8 @@ For a hosted version, serve **index.html**. No server application, account or in
 - Switch between smooth and pixel rendering without replacing the original strokes.
 - Save stamp and motion presets, use canvas guides, and keep local recovery snapshots.
 
+**Updating an earlier Windows copy:** save your drawing as a .jago project and export any custom preset library before switching. This build uses a fresh Jago Loop Studio profile; open your project and import your library to continue.
+
 **Save** creates an editable **.jago** project. Older Studio **.wiggly** projects still open. New projects do not open in the old app. Original Decker projects use a different format.
 
 ![Sketchy bouncing ball](Examples/Bouncing-ball-smooth.gif)
@@ -37,45 +39,18 @@ For a hosted version, serve **index.html**. No server application, account or in
 | Examples | Editable bouncing balls, motion/shading studies, brush and shape samplers, starter presets |
 | Documentation/User-guide.md | Tools, motion settings, shading and shortcuts |
 | Documentation/Brush-packs.md | Make, save and share your own stamp packs |
-| Documentation/Migration.md | Moving older drawings and autosaves safely |
-| Documentation/Credits.md | Original creators and component licences |
+| Documentation/Credits.md | Inspiration, creator credit and component licences |
 | Source | Browser and Windows source with rebuild instructions |
-| GITHUB-SETUP.md | Step-by-step instructions for a fresh repository and website |
-| RELEASE-DESCRIPTION.md | Ready-to-copy release description |
 
 ## Licence
 
-Jago Loop Studio's contributions and documentation use the [MIT License](LICENSE), copyright (c) 2026 **Cameron Jago Lis Illustrates**. John Earnest's original MIT notice and Microsoft's component notices remain in [Notices](Notices). Keep these notices with redistributed copies.
+Jago Loop Studio's contributions and documentation use the [MIT License](LICENSE), copyright (c) 2026 **Cameron Jago Lis Illustrates**. The Windows app includes Microsoft WebView2 components; their licence and third-party notices are in [Notices](Notices). Keep the Studio licence and the applicable Microsoft notices with redistributed copies. WigglyPaint and Decker are credited as inspiration, not bundled dependencies.
 
 The browser app does not send drawings to a service. Autosaves and presets live on your device; downloaded project files are your portable backup. Read the [user guide](Documentation/User-guide.md) for limits and storage behaviour.
 
-## Refined in v1.0.1
+## Release information
 
-Stamp mirroring, independent pattern size, continuous hatching, gentler texture crawl, paste in place, selection-aware movement, steadier freehand drawing and editable arc/grid guides. See [release notes](Documentation/Release-notes.md).
-
-## New in v1.0.2
-
-Selections retain live stroke motion through moving, cut/paste and transforms. Brush/stamp reset buttons, clearer previews, halftone/line/checker patterns with independent pattern size, matching JLS branding and three application themes. That release introduced animated selection groups.
-
-## New in v1.0.3
-
-Selection handles, layer thumbnails and duplication, a simpler stamp panel and brush-pack guide, full-motion PNG sequences, expanded mirror modes, onion controls, the Candy cloud theme, hexagons and larger canvas presets. New .jago saves require v1.0.3 or later; earlier projects still open.
-
-## Fixed in v1.0.4
-
-Whole-layer Classic, Ripple and Flutter keep lines connected without vertical strip gaps. Frame settings now offers Apply timing to all frames, with undo.
-
-The quick colour picker opens independently of the sidebar scroll position or active tab. The pencil shading study now demonstrates a cast shadow, stippled midtones, clipped hatch/crosshatch shadows and a paper highlight on separate named layers, with a light-direction arrow and matching palette.
-
-## Refined in v1.0.5
-
-The pencil motion study keeps its pendulum and rippling ribbon, with a little more movement, pencil hatching, a swing arc, breathing shadow and fluttering line.
-
-The window and browser titles now read Jago Loop Studio. Creator credit lives in Help/About, with the illustration website, Ko-fi and GitHub links, leaving more space above the canvas.
-
-## Refined in v1.0.6
-
-Clearer stamp labels and a step-by-step guide to making, saving and sharing your own stamp brushes.
+Version 1.0.6 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for its development history and packaging cleanup.
 
 ## About & support
 

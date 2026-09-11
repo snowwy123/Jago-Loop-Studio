@@ -1,0 +1,11 @@
+# Original WigglyPaint and Decker: John Earnest (Internet Janitor).
+# Studio edition: Cameron Jago Lis Illustrates. Licensed under MIT.
+**/.sdk/
+**/bin/
+**/obj/
+**/test-output/
+*.pdb
+*.suo
+*.user
+.DS_Store
+Thumbs.db
