@@ -28,7 +28,7 @@ For a hosted version, serve **index.html**. No server application, account or in
 
 **Updating an earlier Windows copy:** save your drawing as a .jago project and export any custom preset library before switching. This build uses a fresh Jago Loop Studio profile; open your project and import your library to continue.
 
-**Save** creates an editable **.jago** project. Older Studio **.wiggly** projects still open. New projects do not open in the old app. Original Decker projects use a different format.
+**Save** creates an editable **.jago** project. Earlier .jago projects still open. Save files use the Jago Loop Studio project format.
 
 ![Sketchy bouncing ball](Examples/Bouncing-ball-smooth.gif)
 
