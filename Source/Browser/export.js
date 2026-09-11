@@ -62,14 +62,15 @@ function exportSummary(){
 }
 $('sequenceRate').onchange=exportSummary;
 
-$('exportBtn').onclick=()=>{pause();motionPreview=false;invalidate();$('exportSeconds').value=project.motionLoopSeconds||3;$('exportTransparent').checked=project.transparent;$('exportStyle').value='current';exportSummary();$('exportDialog').showModal();};$('exportFormat').onchange=exportSummary;$('exportSeconds').onchange=()=>{$('exportSeconds').value=clamp(Math.round(+$('exportSeconds').value||3),1,12);project.motionLoopSeconds=+$('exportSeconds').value;commit();exportSummary();};
-function exportCanvas(fi,tick,w,h,transparent,style=project.renderStyle){const c=makeCanvas(w,h),cc=c.getContext('2d');if(!transparent){cc.fillStyle=project.paper;cc.fillRect(0,0,w,h);}cc.imageSmoothingEnabled=style!=='pixel';cc.drawImage(renderFrame(fi,tick,false,false,style),0,0,w,h);return c;}
+$('exportBtn').onclick=()=>{pause();motionPreview=false;invalidate();$('exportSeconds').value=project.motionLoopSeconds||3;$('exportTransparent').checked=project.transparent;$('exportStyle').value='current';$('exportStyle').disabled=project.canvasMode==='pixel';exportSummary();$('exportDialog').showModal();};$('exportFormat').onchange=exportSummary;$('exportSeconds').onchange=()=>{$('exportSeconds').value=clamp(Math.round(+$('exportSeconds').value||3),1,12);project.motionLoopSeconds=+$('exportSeconds').value;commit();exportSummary();};
+function exportCanvas(fi,tick,w,h,transparent,style=project.renderStyle){if(project.canvasMode==='pixel')style='pixel';const c=makeCanvas(w,h),cc=c.getContext('2d');if(!transparent){cc.fillStyle=project.paper;cc.fillRect(0,0,w,h);}cc.imageSmoothingEnabled=style!=='pixel';cc.drawImage(renderFrame(fi,tick,false,false,style),0,0,w,h);return c;}
 function canvasBlob(c){return new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(Error('The image is too large to export. Try a smaller size.')),'image/png'));}
 $('exportDialog').addEventListener('cancel',e=>{if(exporting){e.preventDefault();cancelExport=true;}});
 $('downloadExport').onclick=async()=>{
- if(exporting)return;const format=$('exportFormat').value,scale=+$('exportScale').value,w=Math.round(project.width*scale),h=Math.round(project.height*scale),transparent=$('exportTransparent').checked,style=$('exportStyle').value==='current'?project.renderStyle:$('exportStyle').value;const button=$('downloadExport');
+ if(exporting)return;const format=$('exportFormat').value,scale=+$('exportScale').value,w=Math.round(project.width*scale),h=Math.round(project.height*scale),transparent=$('exportTransparent').checked,style=project.canvasMode==='pixel'?'pixel':$('exportStyle').value==='current'?project.renderStyle:$('exportStyle').value;const button=$('downloadExport');
  try{
   const seconds=clamp(Math.round(+$('exportSeconds').value||3),1,12),{duration,schedule}=gifSchedule(seconds);
+  if(w*h>32e6||w>16384||h>16384)throw Error('That export is too large. Choose a smaller export size.');
   if(format==='gif'&&(w>1280||h>1280))throw Error('Choose a smaller size for GIF (maximum 1280 px per side).');
   if(format==='gif'&&(schedule.length>240||duration>60))throw Error('This loop is too long. Reduce frame holds or the redraw rate, or export a sprite sheet.');
   exporting=true;cancelExport=false;button.disabled=true;document.querySelectorAll('#exportDialog input,#exportDialog select').forEach(e=>e.disabled=true);$('exportProgress').classList.remove('hidden');$('exportProgress').value=0;

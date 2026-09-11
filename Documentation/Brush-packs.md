@@ -18,7 +18,7 @@ PNG files must be under 4 MB and no larger than 4096 pixels on either side. The 
 ## 2. Try it and save the settings
 
 1. Adjust size, opacity and colour. Choose **One stamp per click** for individual marks or **Along a stroke** for a trail of repeated marks.
-2. Adjust **Spacing** to change the gaps between marks. Try rotation, scatter or size variation if useful. The built-in dither, hatch, dot, line and checker patterns also have a separate **Pattern size** control. Imported PNG images scale with brush size.
+2. Adjust **Spacing** to change the gaps between marks. Try rotation, scatter or size variation if useful. The built-in dither, hatch, dot, line and checker patterns also have a separate **Pattern size** control. Imported PNG images scale with brush size. All six built-in pattern tips offer Continuous pattern (aligned across strokes) or Individual stamps (a separate pattern in each dab). Pattern size works in both layouts; rotation and Follow stroke turn individual patterns. New pattern layouts and extended motion pivots need v1.1.0 or later when sharing packs.
 3. Click **Use stamp brush (J)** and try it on a spare layer. The preview shows the stamp without motion, mirror or pen-pressure variation.
 4. Open **Stamp presets**, enter a name such as "Small pencil star", and choose **Save stamp preset**. Check the summary to see which stamp setup will be saved.
 
@@ -35,3 +35,5 @@ To load a pack, open **Stamp presets**, choose **Import library** and select the
 A project supports 24 custom stamp images. Your library holds up to 30 stamp presets and 30 motion presets. Export a backup: clearing browser data can remove the local library, and it does not automatically transfer between the browser and Windows app. Saved drawing projects include the custom stamp images they use, but your preset library is separate.
 
 Use marks you own or have permission to share. Include the author, terms of use and any required credits when sharing a pack. Cameron's starter stamps are generated patterns, not scans of hand-drawn brush artwork.
+
+Chalk block also supports Continuous pattern and Individual stamps. Pattern angle is saved with stamp presets and project strokes. Use v1.1.1 or later to reproduce these new settings. Earlier chalk strokes and presets keep their original stamped appearance.

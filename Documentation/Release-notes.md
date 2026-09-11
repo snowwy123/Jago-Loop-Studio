@@ -1,3 +1,22 @@
+# Jago Loop Studio v1.1.1
+
+- Chalk block now offers Continuous pattern and Individual stamps, with separately adjustable grain size. Continuous chalk grain aligns between strokes.
+- Pattern angle rotates chalk, hatching, crosshatch, dots, dither, parallel lines and checkerboard. It works in continuous and individual layouts and is saved with strokes and stamp presets. Stamp rotation remains separate.
+- Tiny canvases no longer squeeze the welcome message into a tall column. Pixel canvases have a short screen-sized hint; the message hides when there is insufficient room. Zooming does not enlarge the text.
+- Earlier chalk marks and presets keep their original image-stamp appearance. Project schema remains 5; use v1.1.1 or later for the new chalk and angle settings to look the same.
+- Browser and Windows apps include the same changes.
+
+# Jago Loop Studio v1.1.0
+
+- All six pattern stamps offer Continuous pattern and Individual stamps. Pattern size remains independent of brush width in both modes. Older projects and presets keep their earlier pattern appearance.
+- Spray adds speckle amount, speckle size, spread, centre concentration, round/wide/tall shapes, two starting presets, a preview and its own reset button.
+- Drawing guides add Rule of thirds, Centre cross, Isometric grid, One-point perspective with a movable vanishing point, and a pixel grid that appears when zoomed in. Guides are never exported.
+- New pixel art canvases include 32, 64, 128 and 256 pixel sizes plus 256 x 144. They use a fixed 1 px grid, a 1 px pen, steady ink by default and up to 4000% zoom. Motion is sampled onto real pixels. Export enlargement uses nearest-neighbour scaling, including new 400% and 800% options.
+- Sway and Breathe have a visible draggable pivot, a place-on-canvas button and a centre reset. Pivot changes preview before Apply to layer. Pivots can sit outside the artwork bounds.
+- Help includes brush, line and shape examples alongside the bouncing ball, motion and shading studies. Example layer names use a consistent, friendlier style. Theme names use consistent title case.
+- A bounded cache reuses still artwork underneath layer motion. The rendered output is unchanged; animation, clipping and blending remain active.
+- Windows and browser editions contain the same tools. Existing Jago projects open normally. New saves use schema 5 and need v1.1.0 or later. The current Jago autosave and Windows profile are retained.
+
 # v1.0.7: sampler motion fixes
 
 - Brush and shape samplers now open with motion enabled and animated marks.
@@ -6,12 +25,6 @@
 - The small motion preview works when project motion is disabled. Layer preview temporarily animates the active layer without changing the saved motion switch or unrelated layers.
 - Motion guidance explains that selecting a type prepares new marks; use preview or Apply for existing artwork. Texture crawl affects stamp texture.
 - Browser and Windows versions share these fixes. Project format and Jago profile location are unchanged.
-
-# Packaging cleanup: 11 September 2026
-
-This v1.0.6 package clarifies inspiration credits, removes the precautionary Decker notice from the download and embedded app, and fixes references to removed publishing and migration files. The browser build now creates only the current Jago HTML files. The Windows EXE was rebuilt with corrected metadata and Jago names for its data folder, private browser address and single-instance guard. Browser autosave identifiers also use Jago names, with the obsolete fallback removed. The Windows app starts a fresh profile: save projects and export preset libraries from an earlier build before switching. The older pre-Jago project importer has been removed. Earlier .jago files still open. Drawing behaviour and the version number are unchanged. Microsoft WebView2 notices remain included.
-
-The sections below record development history leading up to the first public release.
 
 # Jago Loop Studio v1.0.6
 
@@ -46,7 +59,7 @@ GitHub is now linked beside the illustration website and Ko-fi in Help.
 - Export the whole animated loop as numbered full-colour PNGs in one ZIP, at 12/24/30/60 fps, including transparency and a timing manifest.
 - Onion controls for before/after frame counts, opacity, distance fading and original colours.
 - Left/right, top/bottom, four-way and 2 to 12-copy radial mirror, with adjustable centres and non-exported guides. Each mark retains its captured settings.
-- Candy cloud pink theme, hexagon shape, larger landscape/square/portrait canvas presets, and Base/Shadow/Light guidance.
+- Candy Cloud pink theme, hexagon shape, larger landscape/square/portrait canvas presets, and Base/Shadow/Light guidance.
 
 New saves use project schema 4 and require v1.0.3 or later. Earlier schema 2/3 .jago projects still open. Existing flattened artwork cannot regain lost stroke data.
 
@@ -62,7 +75,7 @@ PNG sequences are limited to 720 images, 60 seconds and 256 MB of stored image d
 - Stamp previews now use actual size, opacity, colour, canvas paper and Smooth/Pixel mode. Large marks fit inside the preview, and single-click stamps are centred.
 - Halftone dots, parallel lines and checkerboard join the starter tips. Continuous pattern size is independent of brush width. Individual hatch layout clearly disables its inapplicable scale control.
 - Matching hand-drawn JLS logo in the header, browser tab and Windows EXE at seven icon sizes.
-- Charcoal, Warm paper and Midnight plum interface themes, remembered locally and separate from artwork colours.
+- Charcoal, Warm Paper and Midnight Plum interface themes, remembered locally and separate from artwork colours.
 
 New saves use project schema 3 and require v1.0.2 or later. Earlier .jago files still open. Previously flattened selections cannot recover missing stroke data; Undo or an older saved project is needed. Selection edges clip their animated contents.
 

@@ -4,7 +4,7 @@
 'use strict';
 const motionDescriptions={classic:'A contour redrawn with small irregular changes.',sway:'Rock around an anchor without stretching the drawing.',ripple:'A travelling wave passes through the line.',flutter:'Hold one end still while the other catches the breeze.',breathe:'Gently expand and contract around a centre.',spring:'A small elastic impulse settles, once per motion cycle.',drift:'Move the whole mark around a small path.',crawl:'Moving grain inside existing stamp ink. It gently changes the texture, keeping the outline and dither grid fixed. Amount sets contrast. Ordinary pen brushes stay still.'};
 const motionFields={mAmount:['amount',1],mSpeed:['speed',1],mAngle:['angle',1],mWavelength:['wavelength',1],mReach:['reach',100],mGust:['gust',100],mStiffness:['stiffness',1],mDamping:['damping',1],mAnchorX:['anchorX',100],mAnchorY:['anchorY',100],mBalanceX:['balanceX',100],mBalanceY:['balanceY',100],mPhase:['phase',100]};
-const brushFields={stampSpacing:['spacing',100],stampRotation:['rotation',1],stampScatter:['scatter',100],stampVariation:['variation',100],stampDensity:['density',100],stampPatternScale:['patternScale',1]};
+const brushFields={stampSpacing:['spacing',100],stampRotation:['rotation',1],stampScatter:['scatter',100],stampVariation:['variation',100],stampDensity:['density',100],stampPatternScale:['patternScale',1],stampPatternAngle:['patternAngle',1]};
 let currentPanel='draw',lastMotionPreview=-1;
 function showPanel(panel){currentPanel=panel;document.querySelectorAll('[data-panel]').forEach(e=>e.classList.toggle('panel-hidden',e.dataset.panel!==panel));document.querySelectorAll('[data-panel-tab]').forEach(e=>e.setAttribute('aria-selected',String(e.dataset.panelTab===panel)));}
 function setRange(id,value){$(id).value=value;$(id+'Value').textContent=Number(value.toFixed?value.toFixed(2):value);}
@@ -19,12 +19,12 @@ function syncMotionUI(){
 }
 function syncBrushUI(){
  const list=$('stampTip'),current=stampSettings.tip;list.replaceChildren();for(const id of builtinTips){const o=document.createElement('option');o.value=id;o.textContent=tipNames[id];list.append(o);}for(const [id,tip] of Object.entries(project.brushTips||{})){const o=document.createElement('option');o.value=id;o.textContent=tip.name;list.append(o);}if(!builtinTips.includes(current)&&!project.brushTips?.[current])stampSettings.tip='dab';list.value=stampSettings.tip;
- for(const [id,[key,factor]] of Object.entries(brushFields))setRange(id,stampSettings[key]*factor);
- const patterned=patternTips.includes(stampSettings.tip),individual=['hatch','crosshatch'].includes(stampSettings.tip)&&stampSettings.patternMode!=='aligned';
- $('stampPatternMode').value=stampSettings.patternMode||'stamps';$('patternControls').classList.toggle('hidden',!patterned);$('patternModeField').classList.toggle('hidden',!['hatch','crosshatch'].includes(stampSettings.tip));$('densityControl').classList.toggle('hidden',stampSettings.tip!=='dither');$('stampPatternScale').disabled=individual;
+ for(const [id,[key,factor]] of Object.entries(brushFields))setRange(id,(stampSettings[key]??0)*factor);
+ const patterned=patternTips.includes(stampSettings.tip),individual=patterned&&stampSettings.patternMode!=='aligned';
+ $('stampPatternMode').value=stampSettings.patternMode||'stamps';$('patternControls').classList.toggle('hidden',!patterned);$('patternModeField').classList.toggle('hidden',!patterned);$('densityControl').classList.toggle('hidden',stampSettings.tip!=='dither');$('stampPatternScale').disabled=false;
  const custom=!!project.brushTips?.[stampSettings.tip],rotatable=custom||['chalk','flecks','stipple'].includes(stampSettings.tip)||individual;
  $('stampSpacingControl').classList.toggle('hidden',stampSettings.mode==='single');$('stampRotationControl').classList.toggle('hidden',!rotatable);$('stampFollowControl').classList.toggle('hidden',stampSettings.mode==='single');$('stampColourControl').classList.toggle('hidden',!custom);
- $('patternHint').textContent=individual?'Individual hatch stamps scale with brush size. Choose Continuous pattern to set line spacing separately. Rotation and following apply to individual tips.':'Pattern size changes the dots, lines or squares independently of brush width. Continuous patterns join across strokes. Pixel mode rounds pattern size to its grid. Pattern direction stays fixed; rotation turns the stamp shape.';$('stampMode').value=stampSettings.mode;$('stampFollow').checked=stampSettings.follow;$('stampColour').checked=stampSettings.keepColour;$('stampPressureOpacity').checked=stampSettings.pressureOpacity;$('stampMotionPlacement').value=stampSettings.motionPlacement;
+ $('patternHint').textContent=individual?'Each dab carries its own pattern. Pattern size controls its dots or lines separately from brush width. Pattern angle turns the texture inside each dab. Stamp rotation and Follow stroke turn the whole dab.':'Pattern size changes the dots, lines or squares independently of brush width. Continuous patterns join across strokes. Pattern angle turns the texture while keeping it aligned across the canvas. Stamp rotation turns the outer shape. Pixel mode rounds texture details to the pixel grid.';$('stampMode').value=stampSettings.mode;$('stampFollow').checked=stampSettings.follow;$('stampColour').checked=stampSettings.keepColour;$('stampPressureOpacity').checked=stampSettings.pressureOpacity;$('stampMotionPlacement').value=stampSettings.motionPlacement;
  $('size').value=brushSize;$('sizeValue').textContent=brushSize+' px';$('opacity').value=Math.round(opacity*100);$('opacityValue').textContent=Math.round(opacity*100)+'%';$('smoothing').value=Math.round(smoothing*100);$('smoothingValue').textContent=Math.round(smoothing*100)+'%';$('pressure').checked=pressure;$('symmetry').checked=symmetry;$('shapeFill').checked=shapeFilled;$('drawAnimate').checked=$('animateStroke').checked=animateStroke;paintBrushPreview();
 }
 function syncWorkflowUI(){if(!uiReady)return;const b=selectionBounds();$('selectionStatus').textContent=b?Math.round(b.w)+' × '+Math.round(b.h)+' selected pixels. Dashed edge = clipping boundary. Corners resize; round handle rotates. Shift keeps proportions or snaps rotation. Move (V) drags the area.':'Draw around part of the active layer.';for(const id of ['selectionCopy','selectionCut','selectionDelete','selectionClear','selectionTransform','selectionTip'])$(id).disabled=!selection;$('selectionPaste').disabled=!artClipboard;$('pasteFrameArt').disabled=!frameClipboard;}
@@ -96,7 +96,7 @@ const baseSetTool=setTool;setTool=function(id){baseSetTool(id);if(uiReady){if(id
 function installTouchGestures(){
  const points=new Map();let pinch=null;
  canvas.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;if(drawing&&draft?.pressure){e.preventDefault();e.stopImmediatePropagation();return;}points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(points.size===2){finishStroke(true);const[a,b]=[...points.values()];pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),zoom,pan:{...pan},cx:(a.x+b.x)/2,cy:(a.y+b.y)/2};e.preventDefault();e.stopImmediatePropagation();}else if(!touchDrawing){pointerId=e.pointerId;panning={x:e.clientX,y:e.clientY,px:pan.x,py:pan.y};canvas.setPointerCapture(e.pointerId);e.preventDefault();e.stopImmediatePropagation();}},true);
- canvas.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!points.has(e.pointerId))return;points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pinch&&points.size>=2){const[a,b]=[...points.values()];zoom=clamp(pinch.zoom*Math.hypot(a.x-b.x,a.y-b.y)/Math.max(1,pinch.distance),.08,5);pan={x:pinch.pan.x+(a.x+b.x)/2-pinch.cx,y:pinch.pan.y+(a.y+b.y)/2-pinch.cy};applyView();e.preventDefault();e.stopImmediatePropagation();}},true);
+ canvas.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!points.has(e.pointerId))return;points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pinch&&points.size>=2){const[a,b]=[...points.values()];zoom=clamp(pinch.zoom*Math.hypot(a.x-b.x,a.y-b.y)/Math.max(1,pinch.distance),.08,project.canvasMode==='pixel'?40:5);pan={x:pinch.pan.x+(a.x+b.x)/2-pinch.cx,y:pinch.pan.y+(a.y+b.y)/2-pinch.cy};applyView();e.preventDefault();e.stopImmediatePropagation();}},true);
  for(const type of ['pointerup','pointercancel'])canvas.addEventListener(type,e=>{points.delete(e.pointerId);if(pinch){pinch=null;panning=null;pointerId=null;e.stopImmediatePropagation();}},true);
 }
 function makeStudy(kind){
@@ -104,12 +104,12 @@ function makeStudy(kind){
  const ink='#49443e',pale='#f1ece2';
  const stroke=(tool,color,size,points,extra={})=>({kind:'stroke',tool,color,size,points:points.map(([x,y])=>({x,y,p:.5})),opacity:1,pressure:false,animate:false,mirror:false,seed:42,...extra});
  if(kind==='motion'){
-  project.layers[0].name='3. Pendulum: Sway from top';project.layers[0].motion={...motionDefaults('sway'),angle:24,anchorY:0};
+  project.layers[0].name='Pendulum';project.layers[0].motion={...motionDefaults('sway'),angle:24,anchorY:0};
   currentOps().push(stroke('pencil',ink,3,[[300,176],[299,205],[301,245],[300,291],[298,333],[300,361]]),stroke('pencil',ink,3,[[301,360],[280,363],[265,379],[259,398],[263,420],[277,436],[299,441],[321,435],[338,419],[342,397],[335,377],[319,364],[301,360]]),stroke('pencil',ink,1,[[264,412],[270,432],[293,444],[316,440]]),stroke('pencil',ink,2,[[282,378],[275,389],[273,400]]));
   // A few pencil details travel with the bob, so the layer movement is easy to read.
   for(let i=0;i<5;i++)currentOps().push(stroke('pencil',ink,1.5,[[306+i*5,411-i*6],[295+i*5,432-i*4]],{opacity:.55}));
   const guide=uid(),shadow=uid(),id=uid(),thread=uid();
-  project.layers.unshift({id:guide,name:'1. Fixed support + swing arc',visible:true,locked:false,opacity:1});
+  project.layers.unshift({id:guide,name:'Swing guide',visible:true,locked:false,opacity:1});
   currentFrame().contents[guide]=[
    stroke('pencil',ink,2.5,[[258,172],[282,174],[310,173],[339,174]],{opacity:.7}),
    stroke('pencil',ink,2,[[297,169],[302,168],[305,173],[301,178],[296,175],[297,169]]),
@@ -117,9 +117,9 @@ function makeStudy(kind){
    stroke('pencil',ink,1.5,[[190,423],[195,408],[209,415]],{opacity:.3}),
    stroke('pencil',ink,1.5,[[391,414],[405,407],[410,422]],{opacity:.3})
   ];
-  project.layers.splice(1,0,{id:shadow,name:'2. Soft shadow: Breathe twice per swing',visible:true,locked:false,opacity:1,motion:{...motionDefaults('breathe'),amount:28,speed:2,phase:.25,balanceX:1,balanceY:.25}});
+  project.layers.splice(1,0,{id:shadow,name:'Soft shadow',visible:true,locked:false,opacity:1,motion:{...motionDefaults('breathe'),amount:28,speed:2,phase:.25,balanceX:1,balanceY:.25}});
   currentFrame().contents[shadow]=[stroke('stamp','#aaa093',13,[[260,488],[280,490],[300,491],[322,490],[340,488]],{opacity:.48,brush:{...stampDefaults,tip:'stipple',spacing:.2,scatter:.1,variation:.1}})];
-  project.layers.push({id,name:'4. Ribbon: Ripple through pencil hatching',visible:true,locked:false,opacity:1,motion:{...motionDefaults('ripple'),amount:20,wavelength:220,speed:2}});
+  project.layers.push({id,name:'Rippling ribbon',visible:true,locked:false,opacity:1,motion:{...motionDefaults('ripple'),amount:20,wavelength:220,speed:2}});
   currentFrame().contents[id]=[
    stroke('pencil',ink,3,[[558,276],[590,274],[627,277],[668,275],[711,276],[751,274],[796,277]]),
    stroke('pencil',ink,3,[[558,315],[590,317],[627,314],[668,316],[711,315],[751,317],[796,314]]),
@@ -128,17 +128,17 @@ function makeStudy(kind){
    stroke('pencil',ink,1,[[581,306],[630,307],[675,305],[728,307],[771,306]],{opacity:.35})
   ];
   for(let i=0;i<10;i++)currentFrame().contents[id].push(stroke('pencil',ink,1.3,[[578+i*20,303],[568+i*20,313]],{opacity:.45}));
-  project.layers.push({id:thread,name:'5. Loose thread: Flutter from the left',visible:true,locked:false,opacity:1,motion:{...motionDefaults('flutter'),amount:24,speed:2,gust:.15,pin:'start'}});
+  project.layers.push({id:thread,name:'Loose thread',visible:true,locked:false,opacity:1,motion:{...motionDefaults('flutter'),amount:24,speed:2,gust:.15,pin:'start'}});
   currentFrame().contents[thread]=[
    stroke('pencil',ink,2,[[559,394],[584,384],[611,387],[639,401],[667,411],[696,404],[725,384],[753,377],[780,381]],{opacity:.75}),
    stroke('pencil',ink,1,[[559,398],[584,389],[611,392],[639,406],[667,416],[696,409],[725,389],[753,382],[780,386]],{opacity:.4})
   ];
  }else{
-  project.shadePalette=['#e9e2d6','#665d51','#fffdf9'];project.layers[0].name='2. Pencil ball: base';project.layers[0].motion={...motionDefaults('sway'),angle:3,anchorY:1};
+  project.shadePalette=['#e9e2d6','#665d51','#fffdf9'];project.layers[0].name='Pencil ball';project.layers[0].motion={...motionDefaults('sway'),angle:3,anchorY:1};
   currentOps().push(stroke('ellipse','#e9e2d6',1,[[322,159],[642,479]],{filled:true}),stroke('pencil',ink,4.5,[[480,160],[440,164],[400,181],[367,209],[340,248],[324,292],[323,335],[337,383],[365,423],[400,453],[444,473],[484,479],[530,472],[574,451],[606,418],[629,374],[642,329],[638,282],[620,238],[591,202],[554,177],[516,163],[480,160]],{opacity:.85}),stroke('pencil',ink,2,[[322,286],[319,321],[325,357],[341,393],[364,427],[397,455],[430,472]],{opacity:.55}),stroke('pencil',ink,1.5,[[526,163],[559,174],[591,199],[612,225]],{opacity:.45}));
   const ground=uid(),grain=uid(),shade=uid(),light=uid();
-  project.layers.unshift({id:ground,name:'1. Light direction + cast shadow',visible:true,locked:false,opacity:1});
-  project.layers.push({id:grain,name:'3. Stipple midtone: clipped',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true,blend:'multiply'},{id:shade,name:'4. Hatch shadow: clipped',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true,blend:'multiply'},{id:light,name:'5. Paper highlight: clipped',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true});
+  project.layers.unshift({id:ground,name:'Light and cast shadow',visible:true,locked:false,opacity:1});
+  project.layers.push({id:grain,name:'Soft speckles',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true,blend:'multiply'},{id:shade,name:'Pencil shading',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true,blend:'multiply'},{id:light,name:'Little highlight',visible:true,locked:false,opacity:1,clipTo:base,followMotion:true});
   currentFrame().contents[ground]=[
    stroke('ellipse','#d8d1c7',1,[[392,459],[750,501]],{filled:true,opacity:.55}),
    stroke('stamp','#6d655a',25,[[439,479],[495,485],[548,485],[611,482],[660,479]],{opacity:.4,brush:{...stampDefaults,tip:'stipple',spacing:.18,scatter:.12,rotation:24}}),

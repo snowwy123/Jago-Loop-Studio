@@ -21,6 +21,8 @@ Browser source modules:
 - workflow.js: selections, clipping, recovery and extended validation.
 - interface.js: new controls, presets and teaching studies.
 - studio.css: studio and responsive styles.
+- examples.js: embedded editable brush and shape examples.
+- refinements.js: pixel art canvases, spray settings, guides, draggable pivots and bounded still-layer caching.
 - export.js: GIF, PNG, sprite sheets and startup.
 
 ## Windows
@@ -43,6 +45,10 @@ The test writes its own profile, results and exported samples inside that folder
 
 ## Compatibility
 
-Public release v1.0.7 uses internal project schema version 4 for expanded symmetry and hexagons. The validator accepts Jago project schemas 2, 3 and 4 and upgrades earlier Jago schemas when saving. Live selection groups store nested operations, a polygon clip and an affine transform; bounded nesting and point counts are validated before saving mutations. The Windows profile path is %LOCALAPPDATA%\Jago Loop Studio, the private host is jagoloopstudio.example and the single-instance mutex uses JagoLoopStudio. Browser autosave uses jago-loop-studio-v2. No earlier autosave key or Windows profile is read; use project files and exported preset libraries to transfer work from an earlier Windows build.
+Public release v1.1.1 saves project schema 5. Schemas 2, 3 and 4 are accepted and upgraded when saving. Schema 5 adds native pixel canvases, spray settings, additional guides, independently sized stamp patterns and pivots outside artwork bounds. Files saved here require v1.1.0 or later. Imported preset libraries remain supported; new pattern settings and extended pivots require this release.
+
+Pixel canvases keep renderStyle=pixel and pixelSize=1. The renderer uses discrete pixel paths and nearest-neighbour layer transforms and export enlargement. The 24 MiB still-layer cache stores only tick-independent source pixels and is invalidated with project edits. Motion output, clipping and blend modes still run at each motion step. Live selection groups keep their nested operations, clip polygon and affine transform. Project, brush and motion settings are validated before accepting imported files.
 
 Keep the Studio LICENSE and the Microsoft WebView2 licence and third-party notices with redistributed Windows builds. See [credits](../Documentation/Credits.md). WigglyPaint and Decker are inspiration credits; the build does not include the Decker runtime.
+
+Stamp brushes may store patternAngle (-180 to 180 degrees) and chalkPattern. Missing chalkPattern keeps older chalk marks on the original image-stamp renderer. The welcome hint cancels canvas zoom to maintain screen-size text and hides at insufficient display sizes.

@@ -14,17 +14,20 @@ const baseValidateProject=validateProject,baseUpdateUI=updateUI,baseAfterRestore
 const finite=(n,a,b)=>typeof n==='number'&&Number.isFinite(n)&&n>=a&&n<=b;
 function validateMotion(m){
  if(!m||!motionTypes.includes(m.type))throw Error('Unknown motion type');
- const ranges={amount:[0,80],speed:[.1,8],wavelength:[10,1000],angle:[0,60],anchorX:[0,1],anchorY:[0,1],reach:[.1,1],gust:[0,1],balanceX:[0,2],balanceY:[0,2],direction:[-1,1],phase:[0,1],stiffness:[1,8],damping:[0,10]};
+ const ranges={amount:[0,80],speed:[.1,8],wavelength:[10,1000],angle:[0,60],anchorX:[-2,3],anchorY:[-2,3],reach:[.1,1],gust:[0,1],balanceX:[0,2],balanceY:[0,2],direction:[-1,1],phase:[0,1],stiffness:[1,8],damping:[0,10]};
  const clean=motionDefaults(m.type);for(const [k,[a,b]] of Object.entries(ranges)){if(m[k]!==undefined){if(!finite(m[k],a,b))throw Error('Invalid motion setting: '+k);clean[k]=m[k];}}
  for(const k of ['shared','stepped','loop'])if(m[k]!==undefined){if(typeof m[k]!=='boolean')throw Error('Invalid motion setting');clean[k]=m[k];}
  if(m.pin!==undefined&&!['start','end'].includes(m.pin))throw Error('Invalid motion anchor');if(m.path!==undefined&&!['ellipse','line','figure8'].includes(m.path))throw Error('Invalid drift path');
  clean.pin=m.pin||clean.pin;clean.path=m.path||clean.path;return clean;
 }
 function validateBrush(b){
- if(!b||typeof b.tip!=='string'||b.tip.length>40)throw Error('Invalid brush tip');const result={...stampDefaults,...b,patternScale:b.patternScale??1,patternMode:b.patternMode??'stamps'};
+ if(!b||typeof b.tip!=='string'||b.tip.length>40)throw Error('Invalid brush tip');const result={...stampDefaults,...b,patternScale:b.patternScale??1,patternMode:b.patternMode??'stamps',sizedPattern:b.sizedPattern??false,chalkPattern:b.chalkPattern??false,patternAngle:b.patternAngle??0};
  for(const [key,a,z] of [['spacing',.05,3],['rotation',-180,180],['scatter',0,2],['variation',0,1],['density',.05,1]])if(!finite(result[key],a,z))throw Error('Invalid brush setting: '+key);
+ if(b.tip==='chalk'&&!b.chalkPattern)result.patternMode='stamps';
+ if(!finite(result.patternAngle,-180,180))throw Error('Invalid pattern angle');
+ if(!b.sizedPattern&&['dither','dots','stripes','checker'].includes(b.tip))result.patternMode='aligned';
  if(!Number.isInteger(result.patternScale)||!finite(result.patternScale,1,24)||!['aligned','stamps'].includes(result.patternMode))throw Error('Invalid pattern settings');
- for(const key of ['follow','keepColour','pressureOpacity'])if(typeof result[key]!=='boolean')throw Error('Invalid brush option');
+ for(const key of ['follow','keepColour','pressureOpacity','sizedPattern','chalkPattern'])if(typeof result[key]!=='boolean')throw Error('Invalid brush option');
  if(!['single','continuous'].includes(result.mode)||!['stroke','individual','layer'].includes(result.motionPlacement))throw Error('Invalid stamp mode');return result;
 }
 function allOperations(ops){return ops.flatMap(op=>op.kind==='group'?[op,...allOperations(op.ops)]:[op]);}
@@ -39,8 +42,8 @@ validateProject=function(v){
  }
  if(!v||!Array.isArray(v.frames))throw Error('Invalid project');
  const flat={...v,frames:v.frames.map(f=>({...f,contents:Object.fromEntries(Object.entries(f.contents||{}).map(([id,ops])=>[id,flatten(ops)]))}))};baseValidateProject(flat);v.renderStyle=flat.renderStyle;v.pixelSize=flat.pixelSize;
- v.format='jago-loop-studio';v.version=4;
- if(v.guideMode!==undefined&&!['none','grid','arc'].includes(v.guideMode))throw Error('Invalid guide mode');
+ v.format='jago-loop-studio';v.version=5;
+ if(v.guideMode!==undefined&&!['none','grid','arc','thirds','centre','isometric','perspective','pixels'].includes(v.guideMode))throw Error('Invalid guide mode');
  if(v.gridSettings!==undefined){if(!v.gridSettings||typeof v.gridSettings!=='object'||Array.isArray(v.gridSettings))throw Error('Invalid grid guide');for(const [k,a,b] of [['width',8,256],['height',8,256],['x',0,256],['y',0,256],['major',1,10]])if(!Number.isInteger(v.gridSettings[k])||!finite(v.gridSettings[k],a,b))throw Error('Invalid grid setting');}
  if(v.guideSettings!==undefined){if(!v.guideSettings||typeof v.guideSettings!=='object'||Array.isArray(v.guideSettings))throw Error('Invalid arc guide');for(const [k,a,b] of [['x',0,100],['y',0,100],['width',10,180],['height',-80,80],['steps',2,24]])if(!Number.isInteger(v.guideSettings[k])||!finite(v.guideSettings[k],a,b))throw Error('Invalid arc guide setting');}
  if(v.motionLoopSeconds!==undefined&&!finite(v.motionLoopSeconds,1,12))throw Error('Invalid loop duration');
@@ -63,7 +66,7 @@ validateProject=function(v){
 function selectionBounds(points=selection?.points){if(!points?.length)return null;const xs=points.map(p=>p.x),ys=points.map(p=>p.y);return{x:Math.max(0,Math.floor(Math.min(...xs))),y:Math.max(0,Math.floor(Math.min(...ys))),w:Math.min(project.width,Math.ceil(Math.max(...xs)))-Math.max(0,Math.floor(Math.min(...xs))),h:Math.min(project.height,Math.ceil(Math.max(...ys)))-Math.max(0,Math.floor(Math.min(...ys)))};}
 function beginSelection(e,p){selection=null;selectionDrag={tool,points:[p]};renderNeeded=true;}
 function extendSelection(e){const p=pointFrom(e),a=selectionDrag.points[0];if(selectionDrag.tool==='select'){selectionDrag.points=[a,p];}else if(Math.hypot(p.x-selectionDrag.points.at(-1).x,p.y-selectionDrag.points.at(-1).y)>3&&selectionDrag.points.length<1000)selectionDrag.points.push(p);renderNeeded=true;}
-function finishSelection(cancel){if(!cancel){const ps=selectionDrag.points;if(selectionDrag.tool==='select'&&ps.length===2){const[a,b]=ps;selection={points:[a,{x:b.x,y:a.y},b,{x:a.x,y:b.y}]};}else if(ps.length>=3)selection={points:ps};const bounds=selectionBounds();if(!bounds||bounds.w<2||bounds.h<2)selection=null;}selectionDrag=null;renderCache.clear();renderNeeded=true;syncWorkflowUI();}
+function finishSelection(cancel){if(!cancel){const ps=selectionDrag.points;if(selectionDrag.tool==='select'&&ps.length===2){const[a,b]=ps;selection={points:[a,{x:b.x,y:a.y},b,{x:a.x,y:b.y}]};}else if(ps.length>=3)selection={points:ps};const bounds=selectionBounds();if(!bounds||bounds.w<(project.canvasMode==='pixel'?1:2)||bounds.h<(project.canvasMode==='pixel'?1:2))selection=null;}selectionDrag=null;renderCache.clear();renderNeeded=true;syncWorkflowUI();}
 function clearSelection(){selection=null;selectionDrag=null;renderCache.clear();renderNeeded=true;syncWorkflowUI();}
 function drawSelectionPath(c,points){c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.closePath();}
 function stillLayer(){const before=renderingStill;renderingStill=true;try{const raw=renderLayer(project.current,project.activeLayer,0),c=makeCanvas();c.getContext('2d').drawImage(raw,0,0);return c;}finally{renderingStill=before;}}

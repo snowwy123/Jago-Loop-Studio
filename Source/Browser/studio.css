@@ -23,3 +23,7 @@
 #patternControls{border:1px solid var(--line);border-radius:8px;padding:0 10px 6px;margin:10px 0}#brushPackDialog{max-height:88vh;overflow:auto}.brush-pack-steps{padding-left:23px}.brush-pack-steps li{margin:12px 0}
 
 input.tool-color{appearance:none;-webkit-appearance:none;flex-shrink:0;padding:0;background:none;cursor:pointer;overflow:hidden}input.tool-color::-webkit-color-swatch-wrapper{padding:0}input.tool-color::-webkit-color-swatch{border:0;border-radius:50%}input.tool-color::-moz-color-swatch{border:0;border-radius:50%}
+
+#sprayPreview{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0}#sprayControls{border-top:1px solid var(--line);margin:12px 0;padding-top:8px}#sprayControls h3{font-size:13px}#pivotHint{color:var(--muted)}
+
+.empty-hint.pixel-hint svg{display:none}.empty-hint.pixel-hint strong{font-size:15px;letter-spacing:0}.empty-hint.pixel-hint p{font-size:12px;margin:6px 0 0}

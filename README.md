@@ -6,7 +6,7 @@ A small, offline drawing studio for lively lines, textured brushes and short ani
 
 Original inspiration: **John Earnest (Internet Janitor), creator of WigglyPaint and Decker**. This is an independent implementation, with its own renderer and Windows shell. It is not an official release or endorsement by the original creator.
 
-## Open v1.0.7
+## Open v1.1.1
 
 Extract the release ZIP first, then double-click **Jago-Loop-Studio.exe** on Windows or **Jago-Loop-Studio.html** in a modern browser. Each application file is self-contained. The Windows edition requires 64-bit Windows and Microsoft WebView2 Runtime.
 
@@ -19,14 +19,19 @@ For a hosted version, serve **index.html**. No server application, account or in
 - Draw with eleven starter stamp tips, import your own PNG marks, or turn a selection into a brush.
 - Shade with alpha lock, clipping layers, blend modes, hatching and pixel dithering.
 - Select, copy, cut, move, scale and rotate part of a drawing with corner and rotation handles while keeping its animation.
-- Reset brush/stamp settings, preview the actual brush proportions, and choose Charcoal, Warm paper, Midnight plum or Candy cloud.
+- Reset brush/stamp settings, preview the actual brush proportions, and choose Charcoal, Warm Paper, Midnight Plum or Candy Cloud.
 - Animate with frames, holds, adjustable before/after onion skin, loop or ping-pong playback, and frame artwork copying.
 - See layer thumbnails and duplicate a layer across every frame.
 - Draw with left/right, top/bottom, four-way or radial symmetry and a movable centre.
-- Switch between smooth and pixel rendering without replacing the original strokes.
+- Switch between smooth and pixel rendering on drawing canvases, or create a dedicated pixel art canvas with a 1 px pen and crisp exports.
+- Use continuous or individual layouts for all seven pattern stamps, with independent pattern sizing.
+- Adjust spray density, speckle size, spread, concentration and fan shape.
+- Compose with grids, thirds, a centre cross, isometric lines, perspective or an arc guide.
+- Drag the Sway or Breathe pivot on the canvas, preview the movement, then apply it.
+- Open bouncing ball, motion, shading, brush, line and shape examples from Help (?).
 - Save stamp and motion presets, use canvas guides, and keep local recovery snapshots.
 
-**Updating an earlier Windows copy:** save your drawing as a .jago project and export any custom preset library before switching. This build uses a fresh Jago Loop Studio profile; open your project and import your library to continue.
+**Updating:** the current Windows profile and browser storage continue to work. Keep a .jago backup of your drawing. Files saved by v1.1.1 use project schema 5 and need v1.1.1 or later to reopen; earlier Jago projects still open in this version.
 
 **Save** creates an editable **.jago** project. Earlier .jago projects still open. Save files use the Jago Loop Studio project format.
 
@@ -50,7 +55,7 @@ The browser app does not send drawings to a service. Autosaves and presets live 
 
 ## Release information
 
-Version 1.0.7 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for its development history and packaging cleanup.
+Version 1.1.1 includes the complete drawing and animation toolset above. See [release notes](Documentation/Release-notes.md) for changes and compatibility notes.
 
 ## About & support
 

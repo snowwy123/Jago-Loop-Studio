@@ -92,7 +92,7 @@ function warpLayer(source,m,tick,b,style){
  const out=makeCanvas(),c=out.getContext('2d');
  if(['sway','breathe','drift','spring'].includes(m.type)){
   const a=motionPoint({x:0,y:0},m,tick,b),x=motionPoint({x:1,y:0},m,tick,b),y=motionPoint({x:0,y:1},m,tick,b);
-  c.setTransform(x.x-a.x,x.y-a.y,y.x-a.x,y.y-a.y,a.x,a.y);c.drawImage(source,0,0);c.resetTransform();
+  c.imageSmoothingEnabled=style!=='pixel';c.setTransform(x.x-a.x,x.y-a.y,y.x-a.x,y.y-a.y,a.x,a.y);c.drawImage(source,0,0);c.resetTransform();
  }else{
   warpLayerColumns(source,c,m,tick,b,style);
  }
@@ -102,7 +102,7 @@ function warpLayer(source,m,tick,b,style){
 renderLayer=function(fi,id,tick,includeDraft=false,style=project.renderStyle){
  const layer=project.layers.find(l=>l.id===id),effect=resolvedLayerMotion(layer);
  const prior=motionLayerActive,priorTexture=layerTextureMotion,priorPreview=motionPreviewActive;motionLayerActive=!!effect;motionPreviewActive=motionPreview&&effect?.owner===project.activeLayer;layerTextureMotion=effect?.motion.type==='crawl'?effect.motion:null;
- try{const out=legacyRenderLayer(fi,id,tick,includeDraft,style);return effect&&!renderingStill?warpLayer(out,effect.motion,tick,effect.bounds,style):out;}finally{motionLayerActive=prior;layerTextureMotion=priorTexture;motionPreviewActive=priorPreview;}
+ try{const out=cachedLayerArtwork(fi,id,tick,includeDraft,style);return effect&&!renderingStill?warpLayer(out,effect.motion,tick,effect.bounds,style):out;}finally{motionLayerActive=prior;layerTextureMotion=priorTexture;motionPreviewActive=priorPreview;}
 };
 renderFrame=function(fi,tick,withPaper=true,includeDraft=false,style=project.renderStyle){
  const key=`${revision}:${fi}:${tick}:${withPaper}:${style}:${project.pixelSize}:${motionPreview}`;

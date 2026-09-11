@@ -23,7 +23,7 @@ Open Motion, select a Wiggle type and adjust the controls beneath it.
 
 New non-classic motion settings are captured by new strokes when Give new strokes a wiggle is enabled. Classic preserves the original global line-boil controls and legacy drawing behaviour. New v1.0.1 strokes use travelled distance to space their deformation, avoiding tight squiggles caused by densely sampled pointer input. Older strokes keep their previous appearance. Texture crawl works on stamp marks, not ordinary pen outlines. It animates a soft grain within the existing ink, keeping the outline and dither grid fixed. Amount controls grain contrast. This suits textured shading and subtle surface life, rather than moving an object. Ordinary pen strokes do not support it. The earlier cutting-mask implementation could make tips flash; v1.0.1 replaces that behaviour.
 
-**Apply to strokes** changes eligible marks on the active layer in every frame. **Apply to layer** moves the complete layer together and takes precedence over individual stroke motion. Imported images and live selections can move with a layer. Use Edit settings for > Whole active layer to load that layer's saved settings, adjust them, then Apply to layer again. Clear layer motion returns to the strokes' own effects.
+**Apply to strokes** changes eligible marks on the active layer in every frame. **Apply to layer** moves the complete layer together and takes precedence over individual stroke motion. Imported images and live selections can move with a layer. Use Edit settings for > Edit active layer settings to load that layer's saved settings, adjust them, then Apply to layer again. Clear layer motion returns to the strokes' own effects.
 
 The layer preview checkbox is temporary. Apply commits it to the project; opening Export discards an unapplied preview. Undo restores an applied change. Effects are recalculated from saved artwork and do not progressively bend the original drawing.
 
@@ -45,7 +45,7 @@ A stamp is a shape or image repeated as you draw. A saved stamp setup is called 
 
 Stamp presets and Motion presets open the same library. Save stamp preset stores the selected stamp shape and settings shown in its summary, even if another drawing tool is currently active. It does not save ordinary pen, pencil, marker or spray settings. Name the setup and save it, then click its name to reload it. Export library writes a .jagopresets file. Import library adds presets, including any embedded custom tips. Libraries hold up to 30 brushes and 30 motions. A stamp preset stores its tip, brush options, size, opacity and colour; save motion separately. Projects embed the tips used by their stamps. The stamp preview and relevant pattern controls appear first; extra variation and pressure options can be expanded below. See [Make your own brush packs](Brush-packs.md) for a step-by-step guide.
 
-Pattern size (canvas px) changes dither-dot size, hatch/parallel-line spacing, halftone dots and checkerboard squares independently of brush width. Halftone dots, parallel lines, checkerboard and dither always use continuous canvas-aligned patterns. Pixel mode rounds that size to whole canvas grid cells. Hatching layout > Continuous pattern paints through one canvas-aligned diagonal pattern so neighbouring strokes join up. Individual stamp tips retains the earlier overlapping hatch marks and supports per-tip rotation/following. Its line spacing scales with brush width, so the separate Pattern size slider is disabled in this mode. New brushes default to Continuous pattern; old project strokes and imported presets keep their saved layout. Partial opacity can still darken where separate strokes overlap.
+Pattern size (canvas px) changes dither dots, hatch and parallel-line spacing, halftone dots and checkerboard squares independently of brush width. All seven pattern tips support Continuous pattern or Individual stamps, with pattern sizing in either mode. Continuous patterns align across strokes; individual patterns travel and rotate with each dab. Pixel rendering rounds pattern size to grid cells. Older saved marks retain their appearance. Partial opacity can still darken where separate strokes overlap.
 
 Reset brush defaults restores size (8 px), opacity (100%), smoothing (45%), pressure on, mirror off, filled shapes off and new-mark wiggle on. It keeps the chosen tool and colour. Reset stamp defaults restores the stamp options, including pattern size (2 px), spacing (30%), rotation (0), scatter (0) and variation (10%), while keeping the chosen tip, colour and brush size. These controls affect future marks only.
 
@@ -89,13 +89,13 @@ Autosave keeps the current project in local browser storage. Recovery snapshots 
 
 ## Application themes
 
-Open Help (?) and choose Charcoal, Warm paper, Midnight plum or the pink Candy cloud theme under Application theme. The choice is remembered on this device. It changes interface colours only, leaving canvas paper, ink and exports untouched. The same JLS mark appears in the app header, browser tab and Windows EXE icon.
+Open Help (?) and choose Charcoal, Warm Paper, Midnight Plum or the pink Candy Cloud theme under Application theme. The choice is remembered on this device. It changes interface colours only, leaving canvas paper, ink and exports untouched. The same JLS mark appears in the app header, browser tab and Windows EXE icon.
 
 ## Files and exports
 
 Save downloads an editable .jago project. Open accepts .jago projects. Browser and Windows use the same format. In Layers, Import image accepts PNG, JPEG, WebP and GIF under 15 MB. Choose A new layer (the default) to keep the image separate, or The active layer to add it alongside that layer’s marks. A new layer takes the filename as its name and contains the image in the current frame; other frames start empty. Import fits and centres the image inside the canvas. Animated GIFs import as a still image. Move, layer visibility and whole-layer motion work on an imported image layer. Undo removes the import and its new layer together. The limit is 12 layers.
 
-Help contains the simple pencil motion and shading studies. The shading study has five numbered layers: light direction/cast shadow, pencil-ball base, clipped stippled midtone, clipped hatch/crosshatch shadow and clipped paper highlight. Toggle each eye to see its contribution. The ball moves gently while its shading follows; the cast shadow and direction arrow stay on the ground layer. Base/Shadow/Light swatches match the study. Try changing the shadow layer opacity, painting beyond the ball on a clipped layer, or comparing Smooth and Pixel. Support links in Help lead to Cameron’s illustration website and an optional Ko-fi page.
+Help contains the simple pencil motion and shading studies. The shading study has five named layers: light direction/cast shadow, pencil-ball base, clipped stippled midtone, clipped hatch/crosshatch shadow and clipped paper highlight. Toggle each eye to see its contribution. The ball moves gently while its shading follows; the cast shadow and direction arrow stay on the ground layer. Base/Shadow/Light swatches match the study. Try changing the shadow layer opacity, painting beyond the ball on a clipped layer, or comparing Smooth and Pixel. Support links in Help lead to Cameron’s illustration website and an optional Ko-fi page.
 
 Export offers GIF, PNG for the selected frame, or a PNG sprite sheet with one cell per drawing frame. Choose Smooth, Pixel or the current style. Sprite sheets sample the motion at each drawing frame's timeline position; they do not bake every motion subframe. GIF bakes motion throughout the loop.
 
@@ -135,3 +135,42 @@ Open Help (?) and choose Motion study. Save your current drawing first. The five
 ## Trying motion on existing drawings
 
 Choosing a wiggle type prepares settings for new marks. To try it on existing artwork, enable Preview these settings on the layer. This temporary preview works even if project motion is off and does not change the saved drawing. Turn the preview off to return to the original state. Apply to layer moves the layer together; Apply to strokes changes its marks across all frames. Both Apply buttons enable project motion and resume it, and Undo restores the project change. The small preview demonstrates the chosen type independently of the project motion switch. Pause live motion also pauses the small preview. Texture crawl changes stamp texture; plain pen strokes remain still with that type.
+
+
+## Pixel art canvases
+
+Choose **New**, then a small size under **Pixel art**, such as **64 x 64**. This selects **Pixel art canvas**, with one canvas pixel per artwork pixel. You start with a 1 px pen, no smoothing or pressure variation, and steady ink. Zoom in with the wheel; the pixel guide appears once pixels are large enough to see. Edit > Drawing aids lets you turn it off.
+
+Draw and erase directly on this small canvas. Unlike Pixel look on an ordinary drawing canvas, it does not shrink a larger drawing into blocks. The artwork remains editable as strokes, shapes and layers. Imported pictures are fitted to the small canvas with nearest-neighbour rendering.
+
+For motion, turn on **Wiggle new marks** or use **Motion > Apply to layer**. Start with an amount of 1 or 2 pixels. Movement steps from pixel to pixel, so diagonal lines and rotations can change their pixel shape. Use timeline frames for exact hand-placed pixel changes, or leave motion off for still pixel art. No generated in-between drawings are added.
+
+Export at **100%** for actual artwork resolution, or at **400% / 800%** for larger crisp pixels. The fixed grid is also used for GIF and PNG sequence exports. A pixel art canvas cannot switch to Smooth; create an ordinary drawing canvas for that workflow.
+
+## Pattern layouts
+
+Chalk block, Hatching, Crosshatch, Pixel dither, Halftone dots, Parallel lines and Checkerboard each offer two layouts:
+
+- **Continuous pattern:** each stroke reveals the same canvas-aligned pattern. Separate strokes meet without restarting the pattern.
+- **Individual stamps:** each dab carries its own pattern. Rotate dabs, follow the stroke or space them apart for a trail of patterned marks. Overlapping dabs may overlap their patterns, by design.
+
+**Pattern size** changes dots, lines or checks independently of brush size in either layout. **Along a stroke / One stamp per click** controls how many dabs you place; it is separate from the layout inside a dab. PNG stamps, pencil dabs, stipple and other textured tips use their own image shape rather than an artificial tiled layout. Existing projects keep their older stamp rendering until you draw new marks with the new setup.
+
+## Spray setup
+
+Select **Spray (A)**. **Amount of speckles** controls density, **Speckle size** controls each dot, **Spread** changes the reach around the brush, and **Centre concentration** gathers more dots towards the middle. Choose Round, Wide fan or Tall fan. Fine mist and Grainy spray are starting points; Reset spray settings restores the defaults. Size, opacity, colour, mirroring and selection clipping still work. Your strokes save their spray setup in the project. Stamp presets save stamp settings, not spray settings.
+
+## Move a motion pivot
+
+To explore the pendulum, open **? > Motion study**. Select **Pendulum** in Layers, then open **Motion** and choose **Edit active layer settings**. The cross marks the fixed pivot for Sway. Drag it, or choose **Place pivot on canvas** and click a new location. **Centre pivot** puts it in the middle of the artwork.
+
+Changing the pivot previews the result. Choose **Apply to layer** to keep it. Turn preview off to return to the saved movement. Escape cancels placing a pivot or an unfinished drag. The pivot is only a guide and never appears in exports. Breathe uses the same control for its centre. Other motion types have different controls because they do not rotate around a pivot.
+
+Pivot percentages describe the bounds of the layer artwork: 0% is its left/top edge and 100% is its right/bottom edge. Negative values and values above 100% put the point outside those bounds. Adding or moving artwork can change these bounds, so check the pivot when changing a layer's shape.
+
+## More composition guides
+
+In **Edit > Drawing aids**, choose Rule of thirds for composition, Centre cross for alignment, Isometric grid for 30-degree drawing, or One-point perspective for a scene whose lines meet at one point. Isometric spacing uses Cell width. Perspective has a horizontal position and horizon-height control. These are visual guides and do not snap strokes or create animation. The existing grid and arc keep their adjustable settings.
+
+
+Pattern angle turns the grain, hatch lines or other pattern independently of the outer stamp. Continuous layouts keep the rotated pattern aligned across the canvas. Stamp rotation turns the entire individual dab, while Follow stroke turns it along your stroke. Hatching starts diagonal and Parallel lines start horizontal; both can now be turned to any angle. Stipple already has Stamp rotation under its placement settings.
