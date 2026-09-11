@@ -10,7 +10,7 @@ Install Node.js, open a terminal in the suite folder, and run:
 
 The header and favicon embed Source/Brand/logo.svg. Source/Windows/studio.ico contains the same mark at seven Windows icon sizes. Update both assets when changing the branding.
 
-This writes Jago-Loop-Studio.html, index.html and the compatibility alias WigglyPaint-Studio.html. Do not edit generated HTML and expect those changes to survive a rebuild.
+This writes Jago-Loop-Studio.html and index.html. Do not edit generated HTML and expect those changes to survive a rebuild.
 
 Browser source modules:
 
@@ -43,6 +43,6 @@ The test writes its own profile, results and exported samples inside that folder
 
 ## Compatibility
 
-Public release v1.0.6 uses internal project schema version 4 for expanded symmetry and hexagons. The validator accepts Jago versions 2 and 3 and old wiggly-studio version 1 projects and migrates them. Live selection groups store nested operations, a polygon clip and an affine transform; bounded nesting and point counts are validated before saving mutations. The Windows profile path, private host and single-instance mutex intentionally retain earlier names to preserve local work.
+Public release v1.0.6 uses internal project schema version 4 for expanded symmetry and hexagons. The validator accepts Jago project schemas 2, 3 and 4 and upgrades earlier Jago schemas when saving. Live selection groups store nested operations, a polygon clip and an affine transform; bounded nesting and point counts are validated before saving mutations. The Windows profile path is %LOCALAPPDATA%\Jago Loop Studio, the private host is jagoloopstudio.example and the single-instance mutex uses JagoLoopStudio. Browser autosave uses jago-loop-studio-v2. No earlier autosave key or Windows profile is read; use project files and exported preset libraries to transfer work from an earlier Windows build.
 
-Keep the original and Microsoft notices with redistributed builds. Read ../Documentation/Credits.md. After changes, regenerate hashes for release files rather than reusing the old SHA256SUMS.txt.
+Keep the Studio LICENSE and the Microsoft WebView2 licence and third-party notices with redistributed Windows builds. See [credits](../Documentation/Credits.md). WigglyPaint and Decker are inspiration credits; the build does not include the Decker runtime.
